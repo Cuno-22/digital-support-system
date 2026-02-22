@@ -1,0 +1,255 @@
+<div class="main-container">
+  <!-- Flecha de retorno -->
+  <div class="header">
+    <button class="btn-regresar" (click)="regresarDashboard()">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Regresar al Dashboard</span>
+    </button>
+    <h2>Notificaciones Globales</h2>
+  </div>
+
+  <!-- Panel principal -->
+  <div class="usuario-panel">
+    <!-- Campo de búsqueda -->
+    <div class="filtro-container">
+      <label for="filtro">Buscar:</label>
+      <input id="filtro" type="text" [(ngModel)]="filtro" (input)="aplicarFiltro()" placeholder="Buscar notificacion..." name="filtro"/>
+      <button mat-icon-button disabled>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <!-- Filtro por estado -->
+    <div class="filtros-estado">
+      <label for="filtroEstado">Filtrar por estado:</label>
+      <select id="filtroEstado" [(ngModel)]="filtroEstado" (change)="aplicarFiltro()">
+        <option value="todos">Todos</option>
+        <option value="leido">Leídos</option>
+        <option value="no_leido">No leídos</option>
+      </select>
+    </div>
+
+    <!-- Tabla de notificaciones -->
+    <table mat-table [dataSource]="notificacionesFiltradas" class="tabla-aplicativos" matSort>
+      <!-- Motivo Solicitud -->
+      <ng-container matColumnDef="sMotivoSolicitud">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Motivo de Solicitud</th>
+        <td mat-cell *matCellDef="let n" [innerHTML]="resaltarSimilitud(n.sMotivoSolicitud)"></td>
+      </ng-container>
+      
+      <!-- Información notificada -->
+      <ng-container matColumnDef="sInformacionNotificada">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Información</th>
+        <td mat-cell *matCellDef="let n" [innerHTML]="resaltarSimilitud(n.sInformacionNotificada)"></td>
+      </ng-container>
+
+      <!-- Estado de la solicitud -->
+      <ng-container matColumnDef="sEstadoSolicitud">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado de Solicitud</th>
+        <td mat-cell *matCellDef="let n" [innerHTML]="resaltarSimilitud(n.sEstadoSolicitud)"></td>
+      </ng-container>
+
+      <!-- Fecha de envío -->
+      <ng-container matColumnDef="dFechaEnvio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Envío</th>
+        <td mat-cell *matCellDef="let n">{{ n.dFechaEnvio | date: 'dd/MM/yyyy' }}</td>
+      </ng-container>
+
+      <!-- Leído / No leído -->
+      <ng-container matColumnDef="bLeido">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Leído</th>
+        <td mat-cell *matCellDef="let n">
+          <span [class.leido]="n.bLeido" [class.no-leido]="!n.bLeido">
+            {{ n.bLeido ? 'Sí' : 'No' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Estado general -->
+      <ng-container matColumnDef="bEstado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let n">
+          <span [class.activo]="n.bEstado" [class.inactivo]="!n.bEstado">
+            {{ n.bEstado ? 'Activo' : 'Inactivo' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Extra -->
+      <ng-container matColumnDef="Extra">
+        <th mat-header-cell *matHeaderCellDef>Extra</th>
+        <td mat-cell *matCellDef="let n">
+          <button mat-icon-button color="warn" matTooltip="Eliminar notificación" (click)="confirmarEliminarNotificacion(n)">
+            <mat-icon>delete</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header y filas -->
+      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+    </table>
+  </div>
+    
+  <!-- Botones flotantes de acción -->
+  <div class="botones-flotantes">
+  <button mat-fab color="primary" class="btn-flotante insertar" matTooltip="Insertar notificación" (click)="setAccion('agregar')">
+      <mat-icon>add</mat-icon>
+  </button>
+
+  <button mat-fab color="accent" class="btn-flotante actualizar" matTooltip="Actualizar notificación" (click)="setAccion('actualizar')">
+      <mat-icon>update</mat-icon>
+  </button>
+  </div>
+
+  <!-- MENSAJES -->
+  <div *ngIf="mensajeError" class="alert-error">{{ mensajeError }}</div>
+  <div *ngIf="mostrarMensaje" class="alert-exito">{{ mensajeExito }}</div>
+
+  <!-- FORMULARIO DE AGREGAR -->
+  <div *ngIf="accionForm === 'agregar'" class="formulario">
+    <h3>Registrar Nueva Notificación</h3>
+    <form (ngSubmit)="gestionarNotificacion()">
+      <!-- Solicitud -->
+      <label for="solicitud">Solicitud Asociada</label>
+      <select id="solicitud" [(ngModel)]="solicitudSeleccionada" name="solicitud" (change)="onSeleccionarSolicitud()" required>
+        <option [ngValue]="null">Seleccionar Solicitud</option>
+        <option *ngFor="let s of listaSolicitud" [ngValue]="s">
+          {{ s.sMotivo }}
+        </option>
+      </select>
+
+      <!-- Descripción -->
+      <label for="descripcion">Descripción de la Notificación</label>
+      <textarea id="descripcion" [(ngModel)]="notificacionForm.sDescripcion" name="descripcion" placeholder="Detalle la notificación..." rows="4" required>
+      </textarea>
+
+      <!-- Fecha -->
+      <div class="campo-fecha">
+        <strong>Fecha de Registro:</strong>
+        <span>{{ notificacionForm.dFechaEnvio | date: 'short' }}</span>
+      </div>
+
+      <!-- Estados -->
+      <div class="estado">
+        <label>Estado de la Notificacion</label>
+        <p class="estado-general">Activo</p>
+
+        <label>Visualizacion</label>
+
+        <p class="estado-visual">{{ notificacionForm.bLeido || 'No Leido' }}</p>
+      </div>
+
+      <div class="acciones-form">
+        <button type="submit" mat-raised-button color="primary">
+          Registrar
+        </button>
+        <button
+          type="button" mat-raised-button  color="warn" (click)="cancelarFormulario()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- FORMULARIO DE ACTUALIZAR -->
+  <div *ngIf="accionForm === 'actualizar'" class="formulario">
+    <h3>Actualizar Notificación</h3>
+    <form (ngSubmit)="gestionarNotificacion()">
+      <!-- Seleccionar Notificación -->
+      <label for="notificacion">Seleccionar Notificación</label>
+      <select id="notificacion" [(ngModel)]="notificacionSeleccionada" name="notificacion" (change)="onSeleccionarNotificacion()" required>
+        <option [ngValue]="null">Seleccionar Notificación</option>
+        <option
+          *ngFor="let n of notificaciones" [ngValue]="n">
+          {{ n.sInformacionNotificada }} - {{ n.sMotivoSolicitud }}
+        </option>
+      </select>
+
+      <!-- Reasignar Solicitud -->
+      <label for="solicitud">Reasignar Solicitud</label>
+      <select id="solicitud" [(ngModel)]="solicitudSeleccionada" name="solicitud" (change)="onSeleccionarSolicitud()">
+        <option [ngValue]="null">Seleccionar otra Solicitud</option>
+        <option *ngFor="let s of listaSolicitud" [ngValue]="s">
+          {{ s.sMotivo }}
+        </option>
+      </select>
+
+      <!-- Descripción -->
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" [(ngModel)]="notificacionForm.sDescripcion" name="descripcion" rows="4" required>
+      </textarea>
+
+      <!-- Fecha y Hora -->
+      <label for="fechaEnvio">Fecha y Hora de Envío</label>
+      <input id="fechaEnvio" type="datetime-local" [(ngModel)]="notificacionForm.dFechaEnvio" name="fechaEnvio" required />
+
+      <!-- Estado Leído / No Leído -->
+      <div class="estado-radio">
+        <label>Estado de Visualización</label>
+        <div class="opciones-radio">
+          <label>
+            <input type="radio" [(ngModel)]="notificacionForm.bLeido" name="leido" [value]="true" />
+            Leído
+          </label>
+          <label>
+            <input type="radio" [(ngModel)]="notificacionForm.bLeido" name="leido" [value]="false" />
+            No Leído
+          </label>
+        </div>
+      </div>
+
+      <!-- Estado General: Activo / Inactivo -->
+      <div class="estado-radio">
+        <label>Estado General</label>
+        <div class="opciones-radio">
+          <label>
+            <input type="radio" [(ngModel)]="notificacionForm.bEstado" name="estado" [value]="true" />
+            Activo
+          </label>
+          <label>
+            <input type="radio" [(ngModel)]="notificacionForm.bEstado" name="estado" [value]="false" />
+            Inactivo
+          </label>
+        </div>
+      </div>
+      
+      <div class="acciones-form">
+        <button type="submit" mat-raised-button color="accent">
+          Actualizar
+        </button>
+        <button type="button" mat-raised-button color="warn" (click)="cancelarFormulario()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- 🔹 Modal de confirmación -->
+  <div class="overlay" *ngIf="mostrarConfirmacion">
+    <div class="modal">
+      <h3>¿Desea reenviar el aviso al Usuario Cliente?</h3>
+      <div class="modal-actions">
+        <button mat-raised-button color="primary" (click)="confirmarEnvio()">Sí, reenviar el aviso</button>
+        <button mat-raised-button color="warn" (click)="cancelarEnvio()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Panel de confirmación de eliminación -->
+  <div *ngIf="mostrarConfirmacionEliminar" class="panel-eliminar">
+    <p>¿Seguro que deseas eliminar esta notificación?</p>
+    <div class="panel-botones">
+      <button mat-raised-button color="warn" (click)="eliminarNotificacionConfirmada()">Sí, eliminar</button>
+      <button mat-raised-button color="primary" (click)="cancelarEliminacion()">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- 🔹 Spinner / Cargando -->
+  <div class="overlay" *ngIf="mostrarCargando">
+    <div class="spinner-container">
+      <mat-icon class="spinner">autorenew</mat-icon>
+      <p>{{ mensajeCarga }}</p>
+    </div>
+  </div>
+</div>

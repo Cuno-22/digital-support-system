@@ -1,0 +1,58 @@
+<div class="main-container">
+  <!-- PANEL DE FORMULARIO -->
+  <div class="usuario-panel">
+    <h3>Panel de Gestión de Solicitudes</h3>
+
+    <!-- Mensajes -->
+    <div *ngIf="mensajeError" class="alert-error">{{ mensajeError }}</div>
+
+    <div *ngIf="mostrarMensaje" class="alert-exito"> {{ mensajeExito }} </div>
+
+    <!-- Formulario -->
+    <form (ngSubmit)="crearSolicitud()">
+        <!-- ID del UC -->
+        <label for= "UsuarioCliente"> Usuario del cliente</label>
+        <input id="UsuarioCliente" type="text" [value]="nombreUsuarioCliente" readonly class="input-readonly"/>
+
+        <!-- Motivo de la solicitud -->
+        <label for="motivo">Descripción de la Solicitud</label>
+        <textarea id="motivo" [(ngModel)]="nuevaSolicitud.sMotivo" name="motivo" rows="5" placeholder="Explique el motivo de su solicitud" required>
+        </textarea>
+
+        <!-- Tipo de solicitud -->
+        <label for="tipoSolicitud">Tipo de Solicitud</label>
+        <select id="tipoSolicitud" [(ngModel)]="nuevaSolicitud.nIdTipoSolicitud" name="tipoSolicitud" required>
+            <option value="">Seleccionar tipo</option>
+            <option *ngFor="let tipo of tiposSolicitud" [value]="tipo.nIdTipoSolicitud">
+                {{ tipo.sTipoSolicitud }}
+            </option>
+        </select>
+
+        <!-- Aplicativo -->
+        <label for="aplicativo">Aplicativo</label>
+        <select id="aplicativo" [(ngModel)]="nuevaSolicitud.nIdAplicativo" name="aplicativo" required>
+            <option value="">Seleccionar Aplicativo</option>
+            <option *ngFor="let aplicativo of listaAplicativos" [value]="aplicativo.nIdAplicativo">
+                {{ aplicativo.sNombreAplicativo }}
+            </option>
+        </select>
+
+        <!-- Fecha actual -->
+        <div class="campo-fijo">
+            <label>Fecha de Creación de la Solicitud</label>
+            <p>{{ fechaActual | date:'short' }}</p>
+        </div>
+
+        <!-- Estado -->
+        <div class="estado">
+            <label>Estado de la Solicitud</label>
+            <p class="estado-solicitud">{{ nuevaSolicitud.sEstado || 'Pendiente' }}</p>
+
+            <label>Estado General</label>
+            <p class="estado-general">Activo</p>
+        </div>
+
+        <!-- Botón para enviar -->
+        <button type="submit">Crear Solicitud</button>
+    </form>
+</div>

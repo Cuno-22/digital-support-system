@@ -1,0 +1,137 @@
+/* Contenedor principal del formulario */
+.main-container {
+  width: calc(100% - 480px); 
+  margin-left: 250px; 
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center; 
+  padding: 20px 40px;
+}
+
+/* Panel principal */
+.usuario-panel {
+  width: 600px;
+  background: #f8f9fa;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.usuario-panel h3 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+/* Etiquetas */
+.usuario-panel label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #34495e;
+}
+
+/* Inputs, selects y textareas */
+.usuario-panel input,
+.usuario-panel select,
+.usuario-panel textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+}
+
+.usuario-panel textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Campo solo lectura */
+.input-readonly {
+  background-color: #e9ecef;
+  color: #495057;
+  cursor: not-allowed;
+}
+
+/* Botón de enviar */
+.usuario-panel button {
+  display: block;
+  margin: 0 auto;
+  padding: 12px 24px;
+  background-color: #00b894;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.usuario-panel button:hover {
+  background-color: #009973;
+}
+
+/* Mensajes */
+.alert-error {
+  background: #ffe0e0;
+  color: #c0392b;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-exito {
+  background: #e0f7e9;
+  color: #27ae60;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #2ecc71;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Campo fijo de fecha */
+.campo-fijo {
+  margin-bottom: 18px;
+}
+
+.campo-fijo label {
+  font-weight: 600;
+  color: #34495e;
+}
+
+.campo-fijo p {
+  margin-top: 4px;
+  background-color: #e9ecef;
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #2c3e50;
+}
+
+/* Estado visual */
+.estado {
+  margin-bottom: 20px;
+}
+
+.estado label {
+  font-weight: 600;
+  color: #34495e;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.estado-general {
+  color: #27ae60;
+  font-weight: bold;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}

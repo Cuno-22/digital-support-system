@@ -1,0 +1,160 @@
+<div class="main-container">
+  <!-- Sección Tabla -->
+  <div class="usuario-panel tabla-panel">
+    <h3>Avance de Trabajo</h3>
+
+    <!-- Filtro de búsqueda -->
+    <div class="filtro-container">
+      <label for="filtro">Buscar:</label>
+      <input id="filtro" type="text" [(ngModel)]="filtro" (input)="aplicarFiltro()" placeholder="Buscar por detalle, motivo, colaborador o observación..." name="filtro"/>
+      <button mat-icon-button disabled>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <!-- Tabla de registros -->
+    <table mat-table [dataSource]="registrosFiltrados" class="tabla-aplicativos" matSort>
+      <!-- Detalle del trabajo -->
+      <ng-container matColumnDef="sDetalleTrabajo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Detalle</th>
+        <td mat-cell *matCellDef="let reg" [innerHTML]="resaltarSimilitud(reg.sDetalleTrabajo)"></td>
+      </ng-container>
+
+      <!-- Colaborador -->
+      <ng-container matColumnDef="sNombreColaborador">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Colaborador</th>
+        <td mat-cell *matCellDef="let reg" [innerHTML]="resaltarSimilitud(reg.sNombreColaborador)"></td>
+      </ng-container>
+
+      <!-- Motivo -->
+      <ng-container matColumnDef="sMotivo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Motivo</th>
+        <td mat-cell *matCellDef="let reg" [innerHTML]="resaltarSimilitud(reg.sMotivo)"></td>
+      </ng-container>
+
+      <!-- Fecha de registro -->
+      <ng-container matColumnDef="dFechaRegistro">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Registro</th>
+        <td mat-cell *matCellDef="let reg">
+          {{ reg.dFechaRegistro | date: "dd/MM/yyyy" }}
+        </td>
+      </ng-container>
+
+      <!-- Horas trabajadas -->
+      <ng-container matColumnDef="nHorasTrabajadas">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Horas</th>
+        <td mat-cell *matCellDef="let reg">
+          {{ reg.nHorasTrabajadas }}
+        </td>
+      </ng-container>
+
+      <!-- Observación -->
+      <ng-container matColumnDef="sObservacion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Observación</th>
+        <td mat-cell *matCellDef="let reg" [innerHTML]="resaltarSimilitud(reg.sObservacion)"></td>
+      </ng-container>
+
+      <!-- Estado -->
+      <ng-container matColumnDef="bEstado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let reg">
+          <span [class.activo]="reg.bEstado" [class.inactivo]="!reg.bEstado">
+            {{ reg.bEstado ? "Activo" : "Inactivo" }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Extra -->
+      <ng-container matColumnDef="Extra">
+        <th mat-header-cell *matHeaderCellDef>Extra</th>
+        <td mat-cell *matCellDef="let reg">
+          <button mat-icon-button color="warn" matTooltip="Opciones" (click)="abrirOpcionesExtra(reg)">
+            <mat-icon>add</mat-icon>
+          </button>
+          <!-- Opciones desplegables -->
+          <div *ngIf="mostrarOpcionesExtra && registroSeleccionado === reg" class="opciones-extra">
+            <button mat-stroked-button color="primary" (click)="prepararActualizacion()">Actualizar</button>
+            <button mat-stroked-button color="warn" (click)="prepararEliminacion()">Eliminar</button>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Header y filas -->
+      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+    </table>
+    
+  </div>
+    <!-- MENSAJES -->
+  <div *ngIf="mensajeError" class="alert-error">{{ mensajeError }}</div>
+  <div *ngIf="mostrarMensaje" class="alert-exito">{{ mensajeExito }}</div>
+</div>
+
+<!-- 🔹 FORMULARIO DE ACTUALIZACIÓN -->
+<div *ngIf="mostrarFormularioActualizar" class="formulario-actualizar">
+  <h3>Actualizar Registro de Trabajo</h3>
+  <form (ngSubmit)="actualizarRegistro()" class="form-actualizar">
+
+    <div class="campo">
+      <label>Colaborador:</label>
+      <input type="text" [value]="nombreColaborador" readonly class="input-readonly"/>
+    </div>
+
+    <div class="campo">
+      <label>Motivo de Solicitud:</label>
+      <select [(ngModel)]="nuevoRegistro.nIdSolicitud" name="nIdSolicitud" required>
+        <option *ngFor="let sol of listaSolicitudes" [value]="sol.nIdSolicitud">
+          {{ sol.sMotivo }}
+        </option>
+      </select>
+    </div>
+
+    <div class="campo">
+      <label>Descripción:</label>
+      <input type="text" [(ngModel)]="nuevoRegistro.sDescripcion" name="sDescripcion" placeholder="Describa el registro realizado..." required />
+    </div>
+
+    <div class="campo">
+      <label>Fecha Registro:</label>
+      <input type="date" [(ngModel)]="nuevoRegistro.dFechaRegistro" name="dFechaRegistro" required [max]="hoy"/>
+    </div>
+
+    <div class="campo">
+      <label>Horas Trabajadas:</label>
+      <input type="number" [(ngModel)]="nuevoRegistro.nHorasTrabajadas" name="nHorasTrabajadas" required />
+    </div>
+
+    <div class="campo">
+      <label>Observación:</label>
+      <textarea [(ngModel)]="nuevoRegistro.sObservacion" name="sObservacion" placeholder="Escribe observaciones aquí..." required></textarea>
+    </div>
+
+    <div class="campo estado-radio">
+      <label class="titulo-estado">Estado:</label>
+      <div class="opciones-estado">
+        <label>
+          <input type="radio" [(ngModel)]="nuevoRegistro.bEstado" [value]="true" name="estado" />
+          Activo
+        </label>
+        <label>
+          <input type="radio" [(ngModel)]="nuevoRegistro.bEstado" [value]="false" name="estado" />
+          Inactivo
+        </label>
+      </div>
+    </div>
+
+    <div class="botones-actualizar">
+      <button mat-raised-button color="primary" type="submit">Guardar Cambios</button>
+      <button mat-raised-button color="warn" type="button" (click)="cancelarActualizacion()">Cancelar</button>
+    </div>
+  </form>
+</div>
+
+<!-- 🔹 Panel de confirmación de eliminación -->
+<div *ngIf="mostrarConfirmacionEliminar" class="panel-eliminar">
+  <p>¿Seguro que deseas eliminar esta notificación?</p>
+  <div class="panel-botones">
+    <button mat-raised-button color="warn" (click)="eliminarRegistroConfirmado()">Sí, eliminar</button>
+    <button mat-raised-button color="primary" (click)="cancelarEliminacion()">Cancelar</button>
+  </div>
+</div>

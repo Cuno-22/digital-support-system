@@ -1,0 +1,159 @@
+.main-container {
+  width: calc(100% - 320px);
+  margin-left: 180px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 50px;
+}
+
+/* Panel de creación */
+.usuario-panel {
+  width: 550px;
+  margin: 0 auto;
+  background: #f8f9fa;
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.usuario-panel input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.usuario-panel button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #00b894;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Catálogo de roles */
+.catalogo-roles {
+  background: #f4f6f8;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.catalogo-roles ul {
+  list-style: none;
+  padding: 0;
+}
+
+.catalogo-roles li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 12px 15px;
+  margin-bottom: 10px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* Ícono fijo de colaboradores */
+.icon-colaborador {
+  margin-right: 10px;
+  color: #6a0dad;
+}
+
+/* Estado */
+.activo {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.inactivo {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+/* Mensajes */
+.alert-error {
+  background: #ffe0e0;
+  color: #c0392b;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-exito {
+  background: #e0f7e9;
+  color: #27ae60;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #2ecc71;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.estado-activo {
+  color: #6a0dad;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.estado-radio {
+  display: flex;
+  gap: 20px;
+  margin-top: 8px;
+  margin-bottom: 15px;
+}
+
+.estado-radio label {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.form-botones {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin-top: 20px;
+}
+
+.form-botones button {
+  margin: 0;
+}
+
+.btn-editar {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.btn-editar:hover {
+  background: #e0e0e0;
+}
+
+.btn-editar mat-icon {
+  font-size: 20px;
+  color: #333;
+}

@@ -1,0 +1,142 @@
+<div class="main-container">
+  <div class="usuario-panel">
+    <h3>Panel de Creación de Asignación</h3>
+
+    <!-- Formulario -->
+    <form (ngSubmit)="crearAsignacion()">
+
+      <div *ngIf="mensajeErrorInsert" class="alert-error">{{ mensajeErrorInsert }}</div>
+      <div *ngIf="mensajeExitoInsert" class="alert-exito">{{ mensajeExitoInsert }}</div>
+
+      <!-- Solicitud -->
+      <label for="solicitud">Solicitud</label>
+      <select id="solicitud" [(ngModel)]="nuevaAsignacion.nIdSolicitud" name="solicitud" required>
+        <option [ngValue]="0" disabled selected>-- Selecciona una solicitud --</option>
+        <option *ngFor="let solicitud of listaSolicitudesTotales" [ngValue]="solicitud.nIdSolicitud">
+          {{ solicitud.sMotivo }}
+        </option>
+      </select>
+
+      <!-- Colaborador -->
+      <label for="colaborador">Colaborador</label>
+      <input id="colaborador" type="text" [value]="nombreColaborador" readonly class="input-readonly"/>
+
+      <!-- Es Coordinador -->
+      <label>¿Eres Coordinador?</label>
+      <div class="coordinador-options">
+        <label>
+            <input type="radio" [(ngModel)]="nuevaAsignacion.bEsCoordinador" [value]="true" name="esCoordinador" />
+            Sí
+        </label>
+        <label>
+            <input type="radio" [(ngModel)]="nuevaAsignacion.bEsCoordinador" [value]="false" name="esCoordinador" />
+            No
+        </label>
+      </div>
+
+      <!-- Estado -->
+      <div class="estado">
+        <label>Estado de la Asignación</label>
+        <p class="estado-asignacion">{{ nuevaAsignacion.bEstado ? 'Activo' : 'Inactivo' }}</p>
+      </div>
+
+      <!-- Botón -->
+      <button type="submit" class="btn-formulario">Crear Asignación</button>
+    </form>
+  </div>
+
+  <div class="gestion-asignacion">
+    <h3>Gestión de Asignaciones Existentes</h3>
+
+    <!-- Seleccionar asignación -->
+    <label for="asignacion">Seleccionar Asignación</label>
+    <select id="asignacion" [(ngModel)]="asignacionSeleccionada" name="asignacion" 
+            (change)="seleccionarAsignacion(asignacionSeleccionada)">
+      <option [ngValue]="null" disabled selected>-- Selecciona una asignación --</option>
+      <option *ngFor="let a of asignacionesDisponibles" [ngValue]="a">
+        Asignación #{{ a.nIdAsignacionSolicitud }} - Solicitud ID {{ a.nIdSolicitud }}
+      </option>
+    </select>
+
+    <!-- Mensaje de selección -->
+    <div *ngIf="mensajeSeleccion" class="mensaje-seleccion">
+      {{ mensajeSeleccion }}
+    </div>
+
+    <!-- Botones de acción -->
+    <div *ngIf="asignacionSeleccionada && accionSeleccionada === 'ninguna'" class="acciones-asignacion">
+      <button type="button" class="btn-formulario" (click)="mostrarActualizar()">Actualizar</button>
+      <button type="button" class="btn-formulario" (click)="mostrarEliminar()">Eliminar</button>
+    </div>
+
+    <!-- Mensajes de actualización -->
+    <div *ngIf="mensajeErrorUpdate" class="alert-error">{{ mensajeErrorUpdate }}</div>
+    <div *ngIf="mensajeExitoUpdate" class="alert-exito">{{ mensajeExitoUpdate }}</div>
+
+    <!-- 🟢 Formulario de actualización -->
+    <div *ngIf="mostrarFormularioActualizar" class="form-actualizar">
+      <h4>Actualizar Asignación</h4>
+      <form (ngSubmit)="actualizarAsignacionSolicitud()">
+        <!-- Solicitud -->
+        <label for="solicitudUpdate">Solicitud</label>
+        <select id="solicitudUpdate" [(ngModel)]="actualizarAsignacion.nIdSolicitud" name="solicitudUpdate" required>
+          <option [ngValue]="0" disabled selected>-- Selecciona una solicitud --</option>
+          <option *ngFor="let solicitud of listaSolicitudesTotales" [ngValue]="solicitud.nIdSolicitud">
+            {{ solicitud.sMotivo }}
+          </option>
+        </select>
+
+        <!-- Colaborador -->
+        <div class="campo-fijo">
+          <label>Colaborador:</label>
+          <p class="input-readonly">{{ nombreColaborador }}</p>
+        </div>
+
+        <!-- Coordinador -->
+        <label>¿Es Coordinador?</label>
+        <div class="coordinador-options">
+          <label>
+            <input type="radio" [(ngModel)]="actualizarAsignacion.bEsCoordinador" name="updCoordinador" [value]="true" />
+            Sí
+          </label>
+          <label>
+            <input type="radio" [(ngModel)]="actualizarAsignacion.bEsCoordinador" name="updCoordinador" [value]="false" />
+            No
+          </label>
+        </div>
+
+        <!-- Estado -->
+        <div class="estado-radio">
+          <label>Estado</label>
+          <div class="opciones-radio">
+            <label>
+              <input type="radio" [(ngModel)]="actualizarAsignacion.bEstado" name="estadoUpd" [value]="true" />
+              Activo
+            </label>
+            <label>
+              <input type="radio" [(ngModel)]="actualizarAsignacion.bEstado" name="estadoUpd" [value]="false" />
+              Inactivo
+            </label>
+          </div>
+        </div>
+
+        <div class="acciones-form">
+          <button type="submit" class="btn-formulario"> Guardar Cambios</button>
+          <button type="button" class="btn-formulario" (click)="cancelarActualizar()">Cancelar</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- 🔴 Panel de confirmación de eliminación -->
+    <div *ngIf="mensajeErrorDelete" class="alert-error">{{ mensajeErrorDelete }}</div>
+    <div *ngIf="mensajeExitoDelete" class="alert-exito">{{ mensajeExitoDelete }}</div>
+
+    <div *ngIf="mostrarConfirmacionEliminar" class="panel-eliminar">
+      <p>¿Seguro que deseas eliminar esta asignación?</p>
+      <div class="extra-botones">
+        <button mat-raised-button color="warn" (click)="eliminarAsignacionConfirmada()">Sí, eliminar</button>
+        <button mat-raised-button color="primary" (click)="cancelarEliminacion()">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>

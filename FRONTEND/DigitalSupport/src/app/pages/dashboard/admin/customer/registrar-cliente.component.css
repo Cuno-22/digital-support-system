@@ -1,0 +1,153 @@
+.main-container {
+  width: calc(100% - 120px);   /* para dejar espacio del sidebar de 220-240px */
+  margin-left: 70px;          /* empuja todo hacia la derecha */
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 20px;
+}
+
+/* FORMULARIO */
+.cliente-panel {
+  width: 450px;
+  margin: 0 auto;   /* esto lo centra desde main-container */
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.cliente-panel input,
+.cliente-panel select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.cliente-panel button {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 20px;
+  background-color: #00b894;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+/* LISTA */
+.clientes-secciones {
+  background: #f4f6f8;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%;         /* Cambia de 100% a 90% o más si quieres */
+  max-width: 1000px;  /* puedes poner 1000px o 1100px */
+  margin: 0 auto;     /* para que se centre */
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.clientes-secciones h4 {
+  margin-bottom: 10px;
+  color: #2c3e50;
+}
+
+.filtros-cliente {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filtros-cliente button {
+  padding: 6px 14px;
+  background: #2980b9;
+  border: none;
+  border-radius: 6px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cliente-ficha {
+  width: 40%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  display: inline-block;
+  margin-right: 50px;
+}
+
+.btn-editar {
+  margin-top: 10px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.estado-activo {
+  color: #6a0dad;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+/* Feedback */
+.error-global { color: #e74c3c; margin-top: 10px; }
+.toast-exito { color: #27ae60; margin-top: 10px; }
+
+/* ALERTAS */
+.alert-error {
+  background: #ffe0e0;
+  color: #c0392b;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-exito {
+  background: #e0f7e9;
+  color: #27ae60;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #2ecc71;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;  
+}
+
+.botones-form {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.botones-form button {
+  width: auto;
+  min-width: 140px;
+}
+
+/* Botón cancelar específico */
+.btn-cancelar {
+  background-color: #00b894;
+}

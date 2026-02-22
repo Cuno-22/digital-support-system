@@ -1,0 +1,66 @@
+<div class="main-container">
+    <div class="usuario-panel">
+    <h3>
+      {{ modoEdicion ? 'Panel de Edición de Roles de Colaborador' : 'Panel de Creación de Roles de Colaborador' }}
+    </h3>
+
+    <!-- Mensajes -->
+    <div *ngIf="mensajeError" class="alert-error">{{ mensajeError }}</div>
+    <div *ngIf="mostrarMensaje" class="alert-exito">{{ mensajeExito }}</div>
+
+    <!-- Formulario -->
+    <form (ngSubmit)="modoEdicion ? actualizarRolColaborador() : crearRolColaborador()">
+      <label for="descripcion">Descripción del Rol</label>
+      <input id="descripcion" [(ngModel)]="nuevoRol.sDescripcion" name="descripcion" type="text" placeholder="Ingrese descripción" required/>
+
+      <!-- Estado (por defecto activo) -->
+      <div>
+        <label>Estado:</label>
+
+        <!-- Si estás en modo edición, se muestra un select -->
+        <div *ngIf="modoEdicion; else soloActivo" class="estado-radio">
+          <label>
+            <input type="radio" [(ngModel)]="nuevoRol.bEstado" [value]="true" name="estado" />
+            Activo
+          </label>
+          <label>
+            <input type="radio" [(ngModel)]="nuevoRol.bEstado" [value]="false" name="estado" />
+            Inactivo
+          </label>
+        </div>
+        <!-- Si no estás en edición, solo se muestra 'Activo' -->
+        <ng-template #soloActivo>
+          <p class="estado-activo">Activo</p>
+        </ng-template>
+      </div>
+
+      <!-- BOTONES INSERT Y UPDATE -->
+      <div class="form-botones">
+        <button type="submit">
+          {{ modoEdicion ? 'Actualizar Rol' : 'Crear Rol' }}
+        </button>
+        <button *ngIf="modoEdicion" type="button" (click)="cancelarEdicion()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+
+   <!-- CATALOGO -->
+  <div class="catalogo-roles">
+    <h3>Listado de Roles Existentes</h3>
+
+    <ul>
+      <li *ngFor="let rol of listaRolesColaborador">
+        <mat-icon class="icon-colaborador">work</mat-icon>
+        <span>{{ rol.sFuncionColaborador }}</span>
+        <span [ngClass]="{ 'activo': rol.bEstado, 'inactivo': !rol.bEstado }">
+          {{ rol.bEstado ? 'Activo' : 'Inactivo' }}
+        </span>
+        <button class="btn-editar" (click)="iniciarEdicion(rol)" title="Editar">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -1,0 +1,224 @@
+<div class="dashboard-container">
+  <!-- Botones flotantes en la esquina superior derecha -->
+  <div class="top-right-buttons">
+    <button mat-icon-button (click)="toggleUserMenu()" aria-label="Usuario">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleNotificaciones()" aria-label="Notificaciones">
+      <mat-icon>notifications</mat-icon>
+    </button>
+  </div>
+
+  <!-- Panel flotante de usuario -->
+  <div class="user-info-card" *ngIf="mostrarUserInfo">
+    <p><strong><mat-icon>person</mat-icon> Nombre:</strong> {{ userData?.sNombreUsuario }}</p>
+    <p><strong><mat-icon>badge</mat-icon> Perfil:</strong> {{ userData?.sPerfil }}</p>
+    <button mat-raised-button color="warn" (click)="cerrarSesion()">
+      <mat-icon>logout</mat-icon> Cerrar sesión
+    </button>
+  </div>
+
+  <!-- Panel flotante de notificaciones -->
+  <div class="notification-panel" *ngIf="mostrarNotificaciones">
+    <button class="panel-btn" (click)="gestionarNotificaciones()">
+      <mat-icon>edit</mat-icon> Gestionar Notificaciones
+    </button>
+  </div>
+  
+  <div class="dashboard-layout">
+    <!-- Menú lateral y contenido principal -->
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="nav-menu">
+          <a class="nav-item" routerLink="/dashboard/colaborador" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <mat-icon>home</mat-icon>
+            <span>Inicio</span>
+          </a>
+          <a class="nav-item" routerLink="registrar-trabajo" routerLinkActive="active">
+            <mat-icon>assignment</mat-icon>
+            <span>Registro de Trabajo</span>
+          </a>
+          <a class="nav-item" routerLink="crear-asignacion" routerLinkActive="active">
+            <mat-icon>add_circle</mat-icon>
+            <span>Crear Asignacion</span>
+          </a>
+          <a class="nav-item" routerLink="ver-avance-trabajo" routerLinkActive="active">
+            <mat-icon>visibility</mat-icon>
+            <span>Visualizar Avance</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Contenido principal -->
+      <div class="main-content">
+
+        <!-- SOLO MUESTRA LOS PANELES SI ESTÁS EN /dashboard/admin -->
+        <div *ngIf="mostrarPanelColaborador">
+
+          <div class="saludo-colaborador">
+            <h2> Hola, {{ userData?.sNombreUsuario }} </h2>
+            <h1>¡Aquí puedes ver qué solicitudes faltan por atender!</h1>
+          </div>
+
+          <!-- 🔹 Formulario de edición -->
+          <div *ngIf="mensajeExito" class="mensaje-exito">{{ mensajeExito }}</div>
+          <div *ngIf="mensajeError" class="mensaje-error">{{ mensajeError }}</div>
+          <div class="contenedor-formulario" *ngIf="mostrarFormularioEdicion">
+            <h3>Actualizar Solicitud</h3>
+
+            <form (ngSubmit)="guardarCambios()" #formEdit="ngForm">
+              <!-- Usuario Cliente -->
+              <div class="form-group">
+                <label>Usuario Cliente</label>
+                <input
+                  type="text"
+                  [value]="solicitudSeleccionada?.sNombreUsuarioCliente"
+                  readonly
+                />
+              </div>
+
+              <!-- Aplicativo -->
+              <div class="form-group">
+                <label>Aplicativo</label>
+                <input
+                  type="text"
+                  [value]="solicitudSeleccionada?.sNombreAplicativo"
+                  readonly
+                />
+              </div>
+
+              <!-- Tipo de Solicitud -->
+              <div class="form-group">
+                <label>Tipo de Solicitud</label>
+                <input
+                  type="text"
+                  [value]="solicitudSeleccionada?.sTipoSolicitud"
+                  readonly
+                />
+              </div>
+
+              <!-- Motivo -->
+              <div class="form-group">
+                <label>Motivo</label>
+                <textarea
+                  [(ngModel)]="actualizarSolicitudForm.sMotivo"
+                  name="motivo"
+                  required
+                  rows="3"
+                ></textarea>
+              </div>
+
+              <!-- Fecha de Creación -->
+              <div class="form-group">
+                <label>Fecha de Creación</label>
+                <input
+                  type="text"
+                  [value]="solicitudSeleccionada?.dFechaCreacion | date:'dd/MM/yyyy, HH:mm a'"
+                  readonly
+                />
+              </div>
+
+              <!-- Fecha de Finalización -->
+              <div class="form-group" *ngIf="actualizarSolicitudForm.sEstado === 'Finalizado'">
+                <label>Fecha de Finalización</label>
+                <input
+                  type="text"
+                  [value]="fechaActual | date:'dd/MM/yyyy, HH:mm a'"
+                  readonly
+                />
+              </div>
+              <!-- Estado -->
+              <div class="form-group">
+                <label>Estado</label>
+                <div class="radio-group">
+                  <label>
+                    <input
+                      type="radio"
+                      name="estado"
+                      value="Pendiente"
+                      [checked]="actualizarSolicitudForm.sEstado === 'Pendiente'"
+                      (change)="onEstadoChange('Pendiente')"
+                    />
+                    Pendiente
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="estado"
+                      value="En Proceso"
+                      [checked]="actualizarSolicitudForm.sEstado === 'En Proceso'"
+                      (change)="onEstadoChange('En Proceso')"
+                    />
+                    En Proceso
+                  </label>
+                  <label>
+                    <input
+                      type="radio"
+                      name="estado"
+                      value="Finalizado"
+                      [checked]="actualizarSolicitudForm.sEstado === 'Finalizado'"
+                      (change)="onEstadoChange('Finalizado')"
+                    />
+                    Finalizado
+                  </label>
+                </div>
+              </div>
+
+              <!-- Botones -->
+              <div class="botones-actualizar">
+                <button mat-raised-button color="primary" type="submit">Guardar Cambios</button>
+                <button mat-raised-button color="warn" type="button" (click)="cancelarEdicion()">Cancelar</button>
+              </div>
+            </form>
+          </div>
+
+          <h2 class="title">Solicitudes Asignadas</h2>
+
+          <!-- Botones de filtro -->
+          <div class="filtros">
+            <button [class.active]="filtroActivo === 'todas'" (click)="cambiarFiltro('todas')">
+              Todas
+            </button>
+            <button [class.active]="filtroActivo === 'pendientes'" (click)="cambiarFiltro('pendientes')">
+              Pendientes / En Proceso
+            </button>
+            <button [class.active]="filtroActivo === 'finalizadas'" (click)="cambiarFiltro('finalizadas')">
+              Finalizadas
+            </button>
+          </div>
+
+          <!-- Listado de solicitudes -->
+          <div class="tickets-content">
+            <div 
+              *ngFor="let solicitud of (filtroActivo === 'todas' ? listaTotalSolicitudes 
+                : filtroActivo === 'pendientes' ? listaSolicitudesFaltantesPendientes 
+                : listaSolicitudesFinalizadas)" 
+              class="ticket-card" [ngClass]="{
+                'pendiente': solicitud.sEstado === 'Pendiente', 
+                'proceso': solicitud.sEstado === 'En Proceso',
+                'finalizado': solicitud.dFechaFinalizacion 
+              }">
+
+              <!-- 🔹 Botón de edición -->
+              <button
+                class="edit-icon-btn" mat-icon-button (click)="editarSolicitud(solicitud)" title="Editar solicitud">
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <h3>{{ solicitud.sMotivo }}</h3>
+              <p><strong>Aplicativo:</strong> {{ solicitud.sNombreAplicativo }}</p>
+              <p><strong>Tipo:</strong> {{ solicitud.sTipoSolicitud }}</p>
+              <p><strong>Fecha creación:</strong> {{ solicitud.dFechaCreacion | date:'dd/MM/yyyy, HH:mm a' }}</p>
+              <p *ngIf="solicitud.dFechaFinalizacion">
+                <strong>Finalización:</strong> {{ solicitud.dFechaFinalizacion | date:'dd/MM/yyyy, HH:mm a' }}
+              </p>
+              <p *ngIf="solicitud.sEstado">
+                <strong>Estado:</strong> {{ solicitud.sEstado }}
+              </p>
+            </div>
+          </div>   
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

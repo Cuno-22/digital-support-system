@@ -1,0 +1,303 @@
+/* ESTRUCTURA GENERAL */
+.dashboard-container {
+  min-height: 100vh;
+  padding-top: 20px;
+  background-color: #fff;
+}
+
+.dashboard-layout {
+  display: flex;
+  gap: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.layout {
+  display: flex;          /* Esto es lo que pone la barra a la izquierda y contenido a la derecha */
+  width: 100%;
+  position: relative;     /* Necesario para el contexto */
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar {
+  position: sticky;       /* Se queda pegado al llegar arriba */
+  top: 0;                 /* Tope de la pantalla */
+  
+  height: 100vh;          /* Altura completa */
+  width: 240px;           /* Ancho fijo */
+  min-width: 240px;       /* Evita que se encoja */
+  
+  background-color: #00695c; 
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+  
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0;
+}
+
+/* Menú dentro del sidebar */
+.nav-menu {
+  margin-top: 140px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 6px;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s;
+}
+
+.nav-item mat-icon {
+  font-size: 20px;
+}
+
+.nav-item:hover,
+.nav-item.active {
+  background-color: #00897b; /* Verde más claro */
+}
+
+/* ===== CONTENIDO PRINCIPAL ===== */
+h1 {
+  text-align: center;
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+h2 {
+  text-align: center;
+  font-size: 22px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+  margin-bottom: 10px;
+}
+
+.clientes-secciones {
+  margin-bottom: 40px;  /* Aumenta el margen inferior */
+}
+
+.colaboradores-secciones {
+  margin-top: 40px;  /* Aumenta el margen superior */
+}
+
+/* ===== FICHAS GRID ===== */
+.fichas-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 50px;
+  justify-content: flex-start;
+}
+
+.cliente-ficha,
+.colaborador-ficha {
+  flex: 1 1 280px;
+  max-width: 300px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cliente-ficha:hover,
+.colaborador-ficha:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.cliente-ficha h5,
+.colaborador-ficha h5 {
+  margin-bottom: 12px;
+  font-weight: bold;
+  color: #00695c;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.cliente-ficha p,
+.colaborador-ficha p {
+  margin: 6px 0;
+  font-size: 14px;
+  color: #444;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Estado activo/inactivo */
+.cliente-ficha p mat-icon,
+.colaborador-ficha p mat-icon {
+  font-size: 18px;
+}
+
+.estado-activo {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.estado-inactivo {
+  color: #c62828;
+  font-weight: bold;
+}
+
+/* ===== FILTROS ===== */
+.filtros-rol {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0 25px;
+}
+
+.filtros-rol label {
+  font-weight: 500;
+  color: #333;
+}
+
+.filtros-rol select {
+  width: 200px; /* O cualquier ancho que funcione mejor */
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.filtros-rol select:focus {
+  border-color: #00695c;
+}
+
+/* ===== BOTONES SUPERIORES ===== */
+.top-right-buttons {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  gap: 20px;
+  z-index: 200;
+}
+
+.top-right-buttons button {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: #00695c;
+  color: white;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.top-right-buttons button:hover {
+  background-color: #00897b;
+  transform: scale(1.05);
+}
+
+.top-right-buttons mat-icon {
+  font-size: 24px;
+  color: white;
+}
+
+/* ===== PANELES FLOTANTES ===== */
+.user-info-card,
+.notification-panel {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 200;
+  width: 250px;
+}
+
+.user-info-card p {
+  margin: 8px 0;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.user-info-card button {
+  margin-top: 16px;
+  background: #c62828;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Contenido principal */
+.main-content {
+  /* margin-left: 240px;  <-- BORRAR ESTA LÍNEA (Flexbox ya separa los espacios) */
+  padding: 20px;
+  flex: 1;                /* Toma todo el espacio restante a la derecha */
+  width: calc(100% - 240px); /* Opcional: para asegurar límites */
+  overflow-x: hidden;     /* Evita scroll horizontal indeseado */
+}
+
+/* ===== PANEL DE NOTIFICACIONES ===== */
+.notification-panel {
+  position: absolute;
+  top: 70px;
+  right: 20px;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  z-index: 200;
+  width: 250px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: fadeIn 0.2s ease-in-out;
+}
+
+.notification-panel .panel-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #00695c;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.notification-panel .panel-btn:hover {
+  background-color: #00897b;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

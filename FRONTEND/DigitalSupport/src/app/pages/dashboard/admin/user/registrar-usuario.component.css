@@ -1,0 +1,159 @@
+.main-container {
+  width: calc(100% - 120px);   /* para dejar espacio del sidebar de 220-240px */
+  margin-left: 70px;          /* empuja todo hacia la derecha */
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding: 20px;
+}
+
+.usuario-panel {
+  width: 450px;
+  margin: 0 auto;   /* esto lo centra desde main-container */
+  background: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.usuario-panel input,
+.usuario-panel select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.usuario-panel button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 10px 20px;
+  background-color: #00b894;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.usuarios-secciones {
+  background: #f4f6f8;
+  border-radius: 10px;
+  padding: 20px;
+  width: 90%;         /* Cambia de 100% a 90% o más si quieres */
+  max-width: 1000px;  /* puedes poner 1000px o 1100px */
+  margin: 0 auto;     /* para que se centre */
+
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.usuarios-secciones h4 {
+  color: #2c3e50;
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.usuario-ficha {
+  width: 42%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+  margin-bottom: 20px;
+  display: inline-block;
+  margin-right: 50px;
+}
+
+@media screen and (max-width: 900px) {
+  .usuario-ficha {
+    flex: 1 1 100%; /* En pantallas pequeñas quedan uno debajo del otro */
+  }
+}
+
+.usuario-ficha h5 {
+  margin-bottom: 10px;
+  font-weight: bold;
+  color: #34495e;
+}
+
+.usuario-ficha p {
+  margin: 5px 0;
+  font-size: 14px;
+}
+
+.estado-activo {
+  color: #6a0dad;
+  font-weight: bold;
+  text-decoration: underline;
+  margin-top: 5px;
+  margin-bottom: 15px;
+}
+
+.btn-editar {
+  margin-top: 10px;
+  background: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.filtros-rol {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.filtros-rol button {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #2980b9;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.filtros-rol button:hover {
+  background-color: #21618c;
+}
+
+/* ALERTAS */
+.alert-error {
+  background: #ffe0e0;
+  color: #c0392b;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-exito {
+  background: #e0f7e9;
+  color: #27ae60;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #2ecc71;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-cancelar {
+  margin-top: 25px;
+}

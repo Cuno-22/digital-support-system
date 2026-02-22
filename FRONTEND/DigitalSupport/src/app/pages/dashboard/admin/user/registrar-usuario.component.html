@@ -1,0 +1,175 @@
+<div class="main-container">
+  <!-- PANEL DE FORMULARIO -->
+  <div class="usuario-panel">
+    <h3>Panel de Gestión de Usuarios</h3>
+
+    <!-- Mensajes -->
+    <div *ngIf="mensajeError" class="alert-error">{{ mensajeError }}</div>
+
+    <div *ngIf="mostrarMensaje" class="alert-exito">
+      {{ mensajeExito }}
+    </div>
+
+    <!-- Formulario -->
+    <form (ngSubmit)="modoEdicion ? actualizarUsuario() : crearUsuario()">
+
+      <!-- Rol -->
+      <label for="rol">Rol</label>
+      <select id="rol"
+              [(ngModel)]="nuevoUsuario.rol"
+              name="rol"
+              required
+              (change)="onRolUsuarioChange()">
+        <option value="">Seleccionar rol</option>
+        <option value="administrador">Administrador</option>
+        <option value="colaborador">Colaborador</option>
+        <option value="cliente">Cliente</option>
+      </select>
+
+      <!-- Nombre -->
+      <label for="nombre">Nombre</label>
+      <input id="nombre"
+             [(ngModel)]="nuevoUsuario.nombre"
+             name="nombre"
+             type="text"
+             placeholder="Ingrese nombre"
+             required />
+
+      <!-- Apellido -->
+      <label for="apellido">Apellido</label>
+      <input id="apellido"
+             [(ngModel)]="nuevoUsuario.apellido"
+             name="apellido"
+             type="text"
+             placeholder="Ingrese apellido"
+             required />
+
+      <!-- Email -->
+      <div *ngIf="modoEdicion || nuevoUsuario.rol === 'cliente'">
+        <label for="email">Email</label>
+        <input id="email"
+              [(ngModel)]="nuevoUsuario.email"
+              name="email"
+              type="email"
+              placeholder="Ingrese email"
+              [required]="modoEdicion || nuevoUsuario.rol === 'cliente'" />
+      </div>
+
+      <!-- Contraseña -->
+      <label for="contrasena">Contraseña</label>
+      <input id="contrasena"
+             [(ngModel)]="nuevoUsuario.contrasena"
+             name="contrasena"
+             type="password"
+             placeholder="Ingrese contraseña"
+             required />
+
+      <!-- Estado -->
+      <div *ngIf="nuevoUsuario.rol">
+        <label>Estado</label>
+        <p class="estado-activo">Activo</p>
+      </div>
+
+      <!-- ================= CLIENTE ================= -->
+      <div *ngIf="nuevoUsuario.rol === 'cliente'">
+
+        <label for="tipoCliente">Tipo de Cliente</label>
+        <select id="tipoCliente"
+                [(ngModel)]="nuevoUsuario.tipoCliente"
+                name="tipoCliente"
+                (change)="onTipoClienteChange()"
+                required>
+          <option value="0">Seleccionar tipo</option>
+          <option *ngFor="let tipo of tiposCliente"
+                  [value]="tipo.nIdTipoCliente">
+            {{ tipo.sTipoCliente }}
+          </option>
+        </select>
+
+        <label for="idClienteSeleccionado">Cliente</label>
+        <select id="idClienteSeleccionado"
+                [(ngModel)]="nuevoUsuario.idClienteSeleccionado"
+                name="idClienteSeleccionado"
+                required>
+          <option value="0">Seleccionar cliente</option>
+          <option *ngFor="let cliente of listaClientes"
+                  [value]="cliente.nIdCliente">
+            {{ getNombreCliente(cliente) }}
+          </option>
+        </select>
+
+      </div>
+
+      <!-- ================= COLABORADOR ================= -->
+      <div *ngIf="nuevoUsuario.rol === 'colaborador'">
+
+        <label for="idRolColaboradorSeleccionado">Rol del Colaborador</label>
+        <select id="idRolColaboradorSeleccionado"
+                [(ngModel)]="nuevoUsuario.idRolColaboradorSeleccionado"
+                name="idRolColaboradorSeleccionado"
+                required>
+          <option value="0">Seleccionar rol</option>
+          <option *ngFor="let rol of rolesColaboradores"
+                  [value]="rol.nIdRolColaborador">
+            {{ rol.sFuncionColaborador }}
+          </option>
+        </select>
+
+      </div>
+
+      <!-- Botón -->
+      <button type="submit">
+        {{ modoEdicion ? 'Actualizar Usuario' : 'Crear Usuario' }}
+      </button>
+
+      <button *ngIf="modoEdicion"
+              type="button"
+              class="btn-cancelar"
+              (click)="cancelarEdicionUsuario()">
+        Cancelar
+      </button>
+
+    </form>
+  </div>
+
+  <!-- PANEL DE LISTADO -->
+  <div class="usuarios-secciones">
+    <h4 class="titulo-sublista">Usuarios registrados:</h4>
+
+    <div class="filtros-rol">
+      <button (click)="filtrarUsuarios('administrador')">Admins</button>
+      <button (click)="filtrarUsuarios('cliente')">Clientes</button>
+      <button (click)="filtrarUsuarios('colaborador')">Colaboradores</button>
+    </div>
+
+    <div *ngFor="let user of usuariosFiltrados" class="usuario-ficha">
+
+      <h5>
+        <mat-icon>person</mat-icon>
+        {{ user.nombreCompleto }}
+      </h5>
+
+      <p>
+        <mat-icon>lock</mat-icon>
+        {{ user.usuario }}
+      </p>
+
+      <p>
+        <mat-icon>eco</mat-icon>
+        Rol: {{ user.rol }}
+      </p>
+
+      <p *ngIf="user.estado !== undefined">
+        <mat-icon>check_circle</mat-icon>
+        Estado: {{ user.estado ? 'Activo' : 'Inactivo' }}
+      </p>
+
+      <button class="btn-editar"
+              (click)="editarUsuario(user, user.rol)">
+        <mat-icon>edit</mat-icon>
+        Editar
+      </button>
+
+    </div>
+  </div>
+</div>

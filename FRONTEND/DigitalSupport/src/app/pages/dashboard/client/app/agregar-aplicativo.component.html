@@ -1,0 +1,166 @@
+<div class="main-container">
+  <!-- Sección Formulario -->
+  <div class="usuario-panel formulario-panel">
+    <h3>
+      {{ modoEdicion ? 'Panel de Edición de Aplicativo' : 'Panel de Registro de Aplicativo' }}
+    </h3>
+
+    <!-- Mensajes -->
+    <div *ngIf="mensajeError" class="alert-error">{{ mensajeError }}</div>
+    <div *ngIf="mostrarMensaje" class="alert-exito">{{ mensajeExito }}</div>
+
+    <!-- Formulario -->
+    <form (ngSubmit)="modoEdicion ? actualizarAplicativo() : crearAplicativo()">
+      <!-- Nombre -->
+      <label for="nombre">Nombre del Aplicativo</label>
+      <input id="nombre" type="text" [(ngModel)]="nuevoAplicativo.sNombreAplicativo" name="nombre" required />
+
+      <!-- Descripción -->
+      <label for="descripcion">Descripción</label>
+      <textarea id="descripcion" [(ngModel)]="nuevoAplicativo.sDescripcion" name="descripcion" rows="4" required></textarea>
+
+      <!-- Versión -->
+      <label for="version">Versión</label>
+      <input id="version" type="text" [(ngModel)]="nuevoAplicativo.sVersion" name="version" placeholder="Ej: 1.0.0" required />
+
+      <!-- Fecha lanzamiento -->
+      <label for="fecha">Fecha de Lanzamiento</label>
+      <input id="fecha" type="date" [(ngModel)]="nuevoAplicativo.dFechaLanzamiento" name="fecha" [max]="fechaMaxima" required />
+
+      <!-- Fecha Modificacion -->
+      <div *ngIf="modoEdicion">
+        <label for="fechaModificacion">Fecha de Modificación</label>
+        <input id="fecha" type="date" [(ngModel)]="nuevoAplicativo.dFechaModificacion" name="fechaModificacion" [max]="fechaMaxima" required />
+      </div>
+
+      <!-- Cliente -->
+      <label for="cliente">Cliente</label>
+      <select id="cliente" [(ngModel)]="nuevoAplicativo.nIdCliente" name="cliente" required>
+        <option value="">Seleccionar Cliente</option>
+        <option *ngFor="let cliente of listaUsuariosCliente" [value]="cliente.nIdCliente">
+          {{ cliente.sNombreCliente }}
+        </option>
+      </select>
+
+      <!-- Estado (por defecto activo) -->
+      <div>
+        <label>Estado:</label>
+
+        <!-- Si estás en modo edición, se muestra un select -->
+        <div *ngIf="modoEdicion; else soloActivo" class="estado-radio">
+          <label>
+            <input type="radio" [(ngModel)]="nuevoAplicativo.bEstado" [value]="true" name="estado" />
+            Activo
+          </label>
+          <label>
+            <input type="radio" [(ngModel)]="nuevoAplicativo.bEstado" [value]="false" name="estado" />
+            Inactivo
+          </label>
+        </div>
+        <!-- Si no estás en edición, solo se muestra 'Activo' -->
+        <ng-template #soloActivo>
+          <p class="estado-activo">Activo</p>
+        </ng-template>
+      </div>
+
+      <!-- BOTONES INSERT Y UPDATE -->
+      <div class="form-botones">
+        <button type="submit">
+          {{ modoEdicion ? 'Actualizar App' : 'Crear App' }}
+        </button>
+        <button *ngIf="modoEdicion" type="button" (click)="cancelarEdicion()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Sección Tabla -->
+  <div class="usuario-panel tabla-panel">
+    <h3>Lista de Aplicativos</h3>
+
+    <!-- Filtro -->
+    <div class="filtro-container">
+      <label for="filtro">Buscar:</label>
+      <input id="filtro" type="text" [(ngModel)]="filtro" (input)="aplicarFiltro()" placeholder="Buscar aplicativo..." name="filtro"/>
+      <button mat-icon-button disabled>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <!-- Filtro por estado -->
+    <div class="filtro-estado">
+      <label>
+        <input type="radio" name="estado" [(ngModel)]="filtroEstado" value="activo" (ngModelChange)="aplicarFiltro()" /> Activo
+      </label>
+      <label>
+        <input type="radio" name="estado" [(ngModel)]="filtroEstado" value="inactivo" (ngModelChange)="aplicarFiltro()" /> Inactivo
+      </label>
+    </div>
+
+    <!-- Tabla -->
+    <table mat-table [dataSource]="aplicativosFiltrados" class="tabla-aplicativos" matSort>
+      <!-- Nombre -->
+      <ng-container matColumnDef="sNombreAplicativo">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Nombre del App</th>
+        <td mat-cell *matCellDef="let app" [innerHTML]="resaltarSimilitud(app.sNombreAplicativo)"></td>
+      </ng-container>
+
+      <!-- Descripción -->
+      <ng-container matColumnDef="sInformacionApp">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Descripción</th>
+        <td mat-cell *matCellDef="let app" [innerHTML]="resaltarSimilitud(app.sInformacionApp)"></td>
+      </ng-container>
+
+      <!-- Versión -->
+      <ng-container matColumnDef="sVersion">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Versión</th>
+        <td mat-cell *matCellDef="let app" [innerHTML]="resaltarSimilitud(app.sVersion)"></td>
+      </ng-container>
+
+      <!-- Cliente -->
+      <ng-container matColumnDef="sNombreCliente">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Cliente</th>
+        <td mat-cell *matCellDef="let app" [innerHTML]="resaltarSimilitud(app.sNombreCliente)"></td>
+      </ng-container>
+
+      <!-- Fecha Lanzamiento / Fecha Modificacion-->
+      <ng-container matColumnDef="dFechaLanzamiento">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Lanzamiento/ Fecha Modificacion</th>
+        <td mat-cell *matCellDef="let app">
+          <!-- Si tiene ambas fechas -->
+          <ng-container *ngIf="app.dFechaModificacion; else soloLanzamiento">
+            {{ app.dFechaLanzamiento | date:"dd/MM/yyyy" }} - {{ app.dFechaModificacion | date:"dd/MM/yyyy" }}
+          </ng-container>
+
+          <!-- Si solo tiene la de lanzamiento -->
+          <ng-template #soloLanzamiento>
+            {{ app.dFechaLanzamiento | date:"dd/MM/yyyy" }}
+          </ng-template>
+        </td>
+      </ng-container>
+
+      <!-- Estado -->
+      <ng-container matColumnDef="bEstado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let app">
+          {{ app.bEstado ? "Activo" : "Inactivo" }}
+        </td>
+      </ng-container>
+
+      <!-- Extra -->
+      <ng-container matColumnDef="extra">
+        <th mat-header-cell *matHeaderCellDef>Extra</th>
+        <td mat-cell *matCellDef="let app">
+          <button mat-icon-button color="primary" (click)="iniciarEdicion(app)" title="Editar Aplicativo">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </td>
+      </ng-container>
+
+      <!-- Header y filas -->
+      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+    </table>
+  </div>
+</div>

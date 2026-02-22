@@ -1,0 +1,35 @@
+<div class="tickets-content">
+  <h2 class="title">Panel de Solicitudes</h2>
+
+  <!-- Botones de filtro -->
+  <div class="filter-buttons">
+    <button 
+      *ngFor="let tipo of tiposSolicitud" [class.active]="filtroActual === tipo.sTipoSolicitud" (click)="aplicarFiltro(tipo.sTipoSolicitud)">
+      {{ tipo.sTipoSolicitud }}
+    </button>
+    <button [class.active]="filtroActual === null" (click)="aplicarFiltro(null)">
+      Todas
+    </button>
+  </div>
+
+  <!-- Lista de solicitudes -->
+  <div class="tickets-lista">
+    <div *ngFor="let solicitud of solicitudesFiltradas" class="ticket-card" 
+       [ngClass]="{
+          'pendiente': solicitud.sEstado === 'Pendiente', 
+          'proceso': solicitud.sEstado === 'En Proceso',
+          'finalizado': solicitud.sEstado === 'Finalizado'
+        }">
+
+      <h3>{{ solicitud.sMotivo }}</h3>
+      <p *ngIf="filtroActual === null">
+        <strong>Tipo:</strong> {{ solicitud.sTipoSolicitud }}
+      </p>
+      <p><strong>Fecha creación:</strong> {{ solicitud.dFechaCreacion | date:'dd/MM/yyyy, HH:mm a' }}</p>
+      <p *ngIf="solicitud.dFechaFinalizacion">
+        <strong>Finalización:</strong> {{ solicitud.dFechaFinalizacion | date:'dd/MM/yyyy, HH:mm a' }}
+      </p>
+      <p><strong>Estado:</strong> {{ solicitud.sEstado}}</p>
+    </div>
+  </div>
+</div>

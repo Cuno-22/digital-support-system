@@ -1,0 +1,148 @@
+<div class="main-container">
+
+  <div class="cliente-panel">
+    <h3>{{ modoEdicion ? 'Editar Cliente' : 'Registrar Cliente' }}</h3>
+
+    <!-- Mensajes -->
+    <div *ngIf="mensajeError" class="alert-error">{{ mensajeError }}</div>
+
+    <div *ngIf="mostrarMensaje" class="alert-exito">
+      {{ mensajeExito }}
+    </div>
+
+    <!-- Formulario -->
+    <form (ngSubmit)="guardarCliente()">
+
+      <!-- Tipo Cliente -->
+      <label for="tipoCliente">Tipo de Cliente</label>
+      <select id="tipoCliente"
+              [(ngModel)]="nuevoCliente.nIdTipoCliente"
+              name="tipoCliente"
+              (change)="onTipoClienteChange(); nuevoCliente.nIdTipoCliente = +nuevoCliente.nIdTipoCliente">
+        <option value="">Seleccionar tipo</option>
+        <option *ngFor="let tipo of tiposCliente" [value]="tipo.nIdTipoCliente">
+          {{ tipo.sTipoCliente }}
+        </option>
+      </select>
+
+      <!-- ================= EMPRESA ================= -->
+      <div *ngIf="nuevoCliente.nIdTipoCliente === 1">
+        <label for="nombreEmpresa">Nombre Empresa</label>
+        <input id="nombreEmpresa"
+               [(ngModel)]="nuevoCliente.sNombre"
+               name="sNombreEmpresa"
+               type="text"
+               required />
+      </div>
+
+      <!-- ================= PERSONA NATURAL ================= -->
+      <div *ngIf="nuevoCliente.nIdTipoCliente === 2">
+
+        <label for="nombre">Nombre</label>
+        <input id="nombre"
+               [(ngModel)]="nuevoCliente.sNombre"
+               name="sNombrePersona"
+               type="text"
+               required />
+
+        <label for="apellido">Apellido</label>
+        <input id="apellido"
+               [(ngModel)]="nuevoCliente.sApellido"
+               name="sApellido"
+               type="text" />
+
+        <label for="nacimiento">Fecha Nacimiento</label>
+        <input id="nacimiento"
+               type="date"
+               [(ngModel)]="nuevoCliente.dFechaNacimiento"
+               name="dFechaNacimiento"
+               [max]="fechaMaxima"
+               (ngModelChange)="onFechaNacimientoChange()" />
+
+        <div *ngIf="nuevoCliente.nEdad !== null">
+          <label for="edad">Edad</label>
+          <input id="edad"
+                 [(ngModel)]="nuevoCliente.nEdad"
+                 name="nEdad"
+                 type="number"
+                 readonly />
+        </div>
+
+      </div>
+
+      <!-- ================= COMUNES ================= -->
+
+      <label for="correo">Email</label>
+      <input id="correo"
+             [(ngModel)]="nuevoCliente.sEmail"
+             name="sEmail"
+             type="email"
+             required />
+
+      <label for="pass">Contraseña</label>
+      <input id="pass"
+             [(ngModel)]="nuevoCliente.sContrasena"
+             name="sContrasena"
+             type="password"
+             required />
+
+      <!-- Estado -->
+      <div *ngIf="nuevoCliente.nIdTipoCliente">
+        <label>Estado</label>
+        <p class="estado-activo">Activo</p>
+      </div>
+
+      <!-- 🔹 BOTONES CORRECTAMENTE AGRUPADOS -->
+      <div class="botones-form">
+        <button type="submit">
+          {{ modoEdicion ? 'Actualizar Cliente' : 'Registrar Cliente' }}
+        </button>
+
+        <button *ngIf="modoEdicion"
+                type="button"
+                class="btn-cancelar"
+                (click)="cancelarEdicion()">
+          Cancelar
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- ================= LISTADO ================= -->
+  <div class="clientes-secciones">
+    <h4>Clientes registrados</h4>
+
+    <div class="filtros-cliente">
+      <button (click)="filtrarClientes('Empresa')">Empresa</button>
+      <button (click)="filtrarClientes('Persona Natural')">Persona Natural</button>
+    </div>
+
+    <div *ngFor="let c of clientesFiltrados" class="cliente-ficha">
+      <h5>
+        <mat-icon>{{ c.tipo === 'Empresa' ? 'business' : 'person' }}</mat-icon>
+        {{ c.nombre }}
+      </h5>
+
+      <p><mat-icon>mail</mat-icon> {{ c.usuario }}</p>
+
+      <p *ngIf="c.edad">
+        <mat-icon>person</mat-icon> Edad: {{ c.edad }}
+      </p>
+
+      <p *ngIf="c.fechaNacimiento">
+        <mat-icon>event</mat-icon> Nacimiento: {{ c.fechaNacimiento }}
+      </p>
+
+      <p>
+        <mat-icon>check_circle</mat-icon>
+        Estado: {{ c.estado ? 'Activo' : 'Inactivo' }}
+      </p>
+
+      <button class="btn-editar" (click)="editarClienteUI(c)">
+        <mat-icon>edit</mat-icon> Editar
+      </button>
+    </div>
+
+  </div>
+</div>

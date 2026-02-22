@@ -1,0 +1,83 @@
+<div class="main-container">
+  <!-- Flecha de retorno -->
+  <div class="header">
+    <button class="btn-regresar" (click)="regresarDashboard()">
+      <mat-icon>arrow_back</mat-icon>
+      <span>Regresar al Dashboard</span>
+    </button>
+    <h2>Notificaciones del Usuario Cliente</h2>
+  </div>
+
+  <!-- Panel principal -->
+  <div class="usuario-panel">
+    <!-- Campo de búsqueda -->
+    <div class="filtro-container">
+      <label for="filtro">Buscar:</label>
+      <input id="filtro" type="text" [(ngModel)]="filtro" (input)="aplicarFiltro()" placeholder="Buscar notificacion..." name="filtro"/>
+      <button mat-icon-button disabled>
+        <mat-icon>search</mat-icon>
+      </button>
+    </div>
+
+    <!-- Filtro por estado -->
+    <div class="filtros-estado">
+      <label for="filtroEstado">Filtrar por estado:</label>
+      <select id="filtroEstado" [(ngModel)]="filtroEstado" (change)="aplicarFiltro()">
+        <option value="todos">Todos</option>
+        <option value="leido">Leídos</option>
+        <option value="no_leido">No leídos</option>
+      </select>
+    </div>
+
+    <!-- Tabla de notificaciones -->
+    <table mat-table [dataSource]="notificacionesFiltradas" class="tabla-aplicativos" matSort>
+      <!-- Motivo Solicitud -->
+      <ng-container matColumnDef="sMotivoSolicitud">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Motivo de Solicitud</th>
+        <td mat-cell *matCellDef="let n" [innerHTML]="resaltarSimilitud(n.sMotivoSolicitud)"></td>
+      </ng-container>
+      
+      <!-- Información notificada -->
+      <ng-container matColumnDef="sInformacionNotificada">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Información</th>
+        <td mat-cell *matCellDef="let n" [innerHTML]="resaltarSimilitud(n.sInformacionNotificada)"></td>
+      </ng-container>
+
+      <!-- Estado de la solicitud -->
+      <ng-container matColumnDef="sEstadoSolicitud">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Estado de Solicitud</th>
+        <td mat-cell *matCellDef="let n" [innerHTML]="resaltarSimilitud(n.sEstadoSolicitud)"></td>
+      </ng-container>
+
+      <!-- Fecha de envío -->
+      <ng-container matColumnDef="dFechaEnvio">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Fecha Envío</th>
+        <td mat-cell *matCellDef="let n">{{ n.dFechaEnvio | date: 'dd/MM/yyyy' }}</td>
+      </ng-container>
+
+      <!-- Leído / No leído -->
+      <ng-container matColumnDef="bLeido">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Leído</th>
+        <td mat-cell *matCellDef="let n">
+          <span [class.leido]="n.bLeido" [class.no-leido]="!n.bLeido">
+            {{ n.bLeido ? 'Sí' : 'No' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Estado general -->
+      <ng-container matColumnDef="bEstado">
+        <th mat-header-cell *matHeaderCellDef>Estado</th>
+        <td mat-cell *matCellDef="let n">
+          <span [class.activo]="n.bEstado" [class.inactivo]="!n.bEstado">
+            {{ n.bEstado ? 'Activo' : 'Inactivo' }}
+          </span>
+        </td>
+      </ng-container>
+
+      <!-- Header y filas -->
+      <tr mat-header-row *matHeaderRowDef="columnas"></tr>
+      <tr mat-row *matRowDef="let row; columns: columnas"></tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,73 @@
+.tickets-content {
+  padding: 20px;
+}
+
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 16px;
+  color: #222;
+}
+
+/* Lista de tickets */
+.tickets-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 columnas fijas */
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.sin-solicitudes {
+  font-size: 15px;
+  color: #777;
+  margin: 10px 0;
+  font-style: italic;
+}
+
+.ticket-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.ticket-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.ticket-card h3 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #222;
+}
+
+.ticket-card p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: #555;
+}
+
+.ticket-card strong {
+  color: #000;
+}
+
+/* Colores según estado */
+.ticket-card.pendiente {
+  background-color: #f8d7da;   /* Rojo claro */
+  border-color: #f5c2c7;
+}
+
+.ticket-card.proceso {
+  background-color: #fff3cd;   /* Amarillo claro */
+  border-color: #ffe69c;
+}
+
+.ticket-card.finalizado {
+  background-color: #d4edda;   /* Verde claro */
+  border-color: #a3cfbb;
+}

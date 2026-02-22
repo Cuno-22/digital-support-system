@@ -1,0 +1,108 @@
+<div class="dashboard-container">
+  <!-- Botones flotantes en la esquina superior derecha -->
+  <div class="top-right-buttons">
+    <button mat-icon-button (click)="toggleUserMenu()" aria-label="Usuario">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleNotificaciones()" aria-label="Notificaciones">
+      <mat-icon>notifications</mat-icon>
+    </button>
+  </div>
+
+  <!-- Panel flotante de usuario -->
+  <div class="user-info-card" *ngIf="mostrarUserInfo">
+    <p><strong><mat-icon>person</mat-icon> Nombre:</strong> {{ userData?.sNombreUsuario }}</p>
+    <p><strong><mat-icon>badge</mat-icon> Perfil:</strong> {{ userData?.sPerfil }}</p>
+    <button mat-raised-button color="warn" (click)="cerrarSesion()">
+      <mat-icon>logout</mat-icon> Cerrar sesión
+    </button>
+  </div>
+
+  <!-- Panel flotante de notificaciones -->
+  <div class="notification-panel" *ngIf="mostrarNotificaciones">
+    <!-- Si el usuario es CLIENTE -->
+    <button 
+      *ngIf="userData?.sPerfil === 'CLIENTE'" 
+      class="panel-btn" 
+      (click)="visualizarNotificaciones()">
+      <mat-icon>visibility</mat-icon>
+      Visualizar Notificaciones
+    </button>
+  </div>
+  <div class="dashboard-layout">
+    <!-- Menú lateral y contenido principal -->
+    <div class="layout">
+      <aside class="sidebar">
+        <nav class="nav-menu">
+          <a class="nav-item" routerLink="/dashboard/cliente" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <mat-icon>home</mat-icon>
+            <span>Inicio</span>
+          </a>
+          <a class="nav-item" routerLink="agregar-aplicativo" routerLinkActive="active">
+            <mat-icon>apps</mat-icon>
+            <span>Aplicativos</span>
+          </a>
+          <a class="nav-item" routerLink="crear-solicitud" routerLinkActive="active">
+            <mat-icon>note_add</mat-icon>
+            <span>Registrar Solicitud</span>
+          </a>
+          <a class="nav-item" routerLink="tickets-usuario-cliente" routerLinkActive="active">
+            <mat-icon>assignment</mat-icon>
+            <span>Mis Solicitudes</span>
+          </a>
+        </nav>
+      </aside>
+
+      <!-- Contenido principal -->
+      <div class="main-content">
+
+        <!-- SOLO MUESTRA LOS PANELES SI ESTÁS EN /dashboard/admin -->
+        <div *ngIf="mostrarPanelCliente">
+
+          <h2> Hola, {{ userData?.sNombreUsuario }} </h2>
+          <h1>¡No olvides registrar tus solicitudes!</h1>
+
+          <!-- === SECCIÓN DE CLIENTES === -->
+          <div class="clientes-secciones">
+            <h3 class="titulo-sublista">Mis Clientes:</h3>
+            <div class="fichas-grid">
+              <div *ngFor="let cliente of listaClientesUC" class="cliente-ficha">
+                <h5><mat-icon>business</mat-icon> {{ cliente.sNombreCliente }}</h5>
+                <p><mat-icon>mail</mat-icon> {{ cliente.sEmail }}</p>
+                <p><mat-icon>check_circle</mat-icon> 
+                  {{ cliente.bEstado ? 'Activo' : 'Inactivo' }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Lista de fichas de colaboradores -->
+          <div class="colaboradores-secciones">
+            <h3 class="titulo-sublista">Nuestros Colaboradores:</h3>
+
+            <!-- Filtro de roles -->
+            <div class="filtros-rol">
+              <label for="rolColaborador">Filtrar por rol:</label>
+              <select id="rolColaborador" [(ngModel)]="rolSeleccionado" (change)="onRolesColaboradorChange()" class="rol-select">
+              <option *ngFor="let rol of listaRolColaboradores" [value]="rol.nIdRolColaborador">
+                {{ rol.sFuncionColaborador }}
+              </option>
+            </select>
+            </div>
+
+            <!-- Fichas -->
+            <div class="fichas-grid">
+              <div *ngFor="let colab of listaColaboradores" class="colaborador-ficha">
+                <h5><mat-icon>person</mat-icon> {{ colab.sNombreColaborador }}</h5>
+                <p><mat-icon>mail</mat-icon> {{ colab.sEmail }}</p>
+                <p><mat-icon>check_circle</mat-icon> 
+                  {{ colab.bEstado ? 'Activo' : 'Inactivo' }}
+                </p>
+              </div>
+            </div>
+          </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

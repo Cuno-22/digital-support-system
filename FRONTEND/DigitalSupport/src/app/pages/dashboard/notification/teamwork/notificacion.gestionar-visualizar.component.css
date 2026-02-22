@@ -1,0 +1,598 @@
+/* 🔹 Contenedor principal */
+.main-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  min-height: calc(100vh - 80px);
+  padding: 30px 0;
+  box-sizing: border-box;
+  background: #f7f9fb;
+  font-family: "Poppins", sans-serif;
+}
+
+/* 🔹 Header con flecha de retorno */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 85%;
+  max-width: 1000px;
+  margin-bottom: 20px;
+  gap: 10px;
+}
+
+.header h2 {
+  flex: 1;
+  text-align: center;
+  font-size: 22px;
+  color: #2c3e50;
+  font-weight: 700;
+  margin: 0;
+  margin-right: 100px;
+}
+
+/* 🔹 Botón de retorno */
+.btn-regresar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #00b894;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.btn-regresar mat-icon {
+  font-size: 20px;
+}
+
+.btn-regresar:hover {
+  background-color: #00997a;
+  transform: translateY(-2px);
+}
+
+/* 🔹 Panel principal */
+.usuario-panel {
+  background: #ffffff;
+  width: 85%;
+  max-width: 1000px;
+  padding: 30px 40px;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease;
+}
+
+.usuario-panel:hover {
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
+
+/* 🔹 Campo de búsqueda */
+.campo-busqueda {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.campo-busqueda input {
+  font-size: 14px;
+}
+
+/* 🔹 Filtro por estado */
+.filtros-estado {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.filtros-estado label {
+  font-weight: 600;
+  color: #34495e;
+}
+
+.filtros-estado select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  background: white;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* 🔹 Tabla de notificaciones */
+table.mat-mdc-table {
+  width: 100%;
+  border-radius: 10px;
+  overflow: visible;
+  background-color: #fff;
+  border-collapse: collapse;
+}
+
+.mat-mdc-header-cell,
+.mat-mdc-cell {
+  text-align: center !important;
+}
+
+.mat-mdc-header-cell:first-child,
+.mat-mdc-cell:first-child {
+  width: 40%;
+  text-align: left !important;
+}
+
+/* Encabezados */
+.mat-header-cell {
+  background-color: #00b894;
+  color: white;
+  font-weight: 600;
+  text-align: left;
+  padding: 12px;
+  font-size: 14px;
+}
+
+/* Celdas */
+.mat-mdc-cell {
+  padding: 10px 2px;
+  font-size: 14px;
+  color: #2c3e50;
+  border-bottom: 1px solid #ececec;
+}
+
+/* Hover en filas */
+.mat-mdc-row:hover {
+  background-color: #f1fdf6;
+  transition: background-color 0.3s ease;
+}
+
+/* 🔹 Estado Leído / No leído */
+.leido {
+  color: #27ae60;
+  font-weight: bold;
+}
+
+.no-leido {
+  color: #e67e22;
+  font-weight: bold;
+}
+
+/* 🔹 Estado general */
+.activo {
+  color: #16a085;
+  font-weight: bold;
+}
+
+.inactivo {
+  color: #c0392b;
+  font-weight: bold;
+}
+
+/* 🔹 Texto resaltado del filtro */
+.resaltado {
+  background-color: #fff59d;
+  font-weight: 600;
+  border-radius: 3px;
+  padding: 1px 3px;
+}
+
+/* 🔹 Sección sin resultados */
+.sin-resultados {
+  margin-top: 20px;
+  text-align: center;
+  color: #7f8c8d;
+  font-weight: 500;
+}
+
+.sin-resultados mat-icon {
+  color: #00b894;
+  font-size: 28px;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+/* 🔹 Mensajes de error o éxito (opcional) */
+.alert-error {
+  background: #ffe0e0;
+  color: #c0392b;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-exito {
+  background: #e0f7e9;
+  color: #27ae60;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #2ecc71;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Filtro */
+.filtro-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  max-width: 500px; /* Puedes aumentar o quitar este límite si lo necesitas */
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 6px 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+}
+
+.filtro-container label {
+  font-weight: 500;
+  color: #2c3e50;
+  margin-right: 8px;
+}
+
+.filtro-container input {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  font-family: "Poppins", sans-serif;
+  background: transparent;
+  color: #2c3e50;
+}
+
+/* 🔹 Responsive (para pantallas pequeñas) */
+@media (max-width: 768px) {
+  .usuario-panel {
+    padding: 20px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header h2 {
+    text-align: left;
+    font-size: 18px;
+  }
+
+  table.mat-mdc-table {
+    font-size: 12px;
+  }
+
+  .filtros-estado {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-regresar {
+    padding: 6px 10px;
+    font-size: 13px;
+  }
+}
+
+/* Contenedor de los botones flotantes */
+.botones-flotantes {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  z-index: 1000;
+}
+
+/* Estilo base de los botones flotantes */
+.btn-flotante {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+  transition: all 0.3s ease;
+  color: #fff;
+}
+
+/* Botón de inserción: rosa fuerte */
+.btn-flotante.insertar {
+  background-color: #e91e63;
+}
+
+/* Botón de actualización: rosa más suave */
+.btn-flotante.actualizar {
+  background-color: #e91e63;
+}
+
+/* Efecto hover */
+.btn-flotante:hover {
+  transform: scale(1.12);
+  box-shadow: 0 8px 20px rgba(233, 30, 99, 0.4);
+}
+
+/* Efecto al hacer clic */
+.btn-flotante:active {
+  transform: scale(0.96);
+  box-shadow: 0 4px 10px rgba(233, 30, 99, 0.5);
+}
+
+/* Adaptabilidad para pantallas pequeñas */
+@media (max-width: 768px) {
+  .botones-flotantes {
+    bottom: 15px;
+    right: 15px;
+    gap: 10px;
+  }
+  .btn-flotante {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* ===== MENSAJES ===== */
+.alert-error {
+  background: #ffe0e0;
+  color: #c0392b;
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-exito {
+  background: #e0f7e9;
+  color: #27ae60;
+  padding: 10px;
+  margin-top: 20px;
+  border: 1px solid #2ecc71;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* ===== FORMULARIOS DINÁMICOS ===== */
+.formulario {
+  margin-top: 35px;
+  background-color: #f8f9fa;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  width: 85%;
+  max-width: 1000px;
+  box-sizing: border-box;
+}
+
+.formulario h3 {
+  text-align: center;
+  color: #2c3e50;
+  margin-bottom: 20px;
+}
+
+.formulario label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #34495e;
+}
+
+.formulario input,
+.formulario select,
+.formulario textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+
+  box-sizing: border-box;
+}
+
+.formulario textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+.acciones-form {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+/* 🔹 Campo de Fecha de Registro */
+.campo-fecha {
+  color: #34495e;
+  margin: 15px 0 10px;
+  display: flex;
+  flex-direction: column;
+}
+
+.campo-fecha span {
+  margin-top: 4px;
+  font-weight: 500;
+  color: #2c3e50;
+  background-color: #ecf0f1;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  width: fit-content;
+  font-size: 14px;
+}
+
+/* 🔹 Estado dentro del formulario */
+.estado {
+  margin-top: 15px;
+}
+
+.estado label {
+  font-weight: 600;
+  color: #34495e;
+  display: block;
+  margin-top: 10px;
+  margin-bottom: 4px;
+}
+
+.estado-general,
+.estado-visual {
+  font-weight: bold;
+  padding: 6px 12px;
+  border-radius: 6px;
+  display: inline-block;
+  width: fit-content;
+  font-size: 14px;
+}
+
+.estado-general {
+  color: #16a085;
+}
+
+.estado-visual {
+  color: #e67e22;
+}
+
+.estado-radio {
+  margin-top: 15px;
+}
+
+.estado-radio label {
+  font-weight: 600;
+  color: #34495e;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.opciones-radio {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 15px;
+  white-space: nowrap;
+}
+
+.opciones-radio label {
+  font-weight: 500;
+  color: #2c3e50;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Extras */
+.overlay{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(10, 10, 10, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1200;
+}
+
+.spinner-container {
+  background: #fff;
+  padding: 25px 35px;
+  border-radius: 16px;
+  text-align: center;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+}
+
+.spinner {
+  font-size: 40px;
+  animation: girar 1.2s linear infinite;
+  color: #007bff;
+  margin-bottom: 10px;
+}
+
+@keyframes girar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.modal {
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.4);
+  width: 380px;
+}
+
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.btn-reenviar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+/* ===== ACCIONES EN TABLA (Eliminar) ===== */
+.mat-icon-button[color="warn"] {
+  color: #e53935;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.mat-icon-button[color="warn"]:hover {
+  color: #c62828;
+  transform: scale(1.15);
+}
+
+/* ===== PANEL DE CONFIRMACIÓN DE ELIMINACIÓN ===== */
+.panel-eliminar {
+  position: fixed;
+  bottom: 40px; /* un poco separado del borde inferior */
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-top: 4px solid #dc3545; /* rojo elegante arriba */
+  color: #333;
+  padding: 20px 30px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 420px;
+  text-align: center;
+  z-index: 3000;
+  animation: fadeInPanel 0.25s ease-in-out;
+}
+
+/* Botones del panel */
+.panel-botones {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 18px;
+}
+
+.panel-botones button {
+  min-width: 120px;
+  font-weight: 500;
+}
+
+/* Pequeña animación de entrada */
+@keyframes fadeInPanel {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}

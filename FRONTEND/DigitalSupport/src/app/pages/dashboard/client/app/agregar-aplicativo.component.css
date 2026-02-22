@@ -1,0 +1,208 @@
+/* Contenedor principal */
+.main-container {
+  display: flex;
+  flex-direction: column; /* cada sección una debajo de otra */
+  gap: 30px; /* espacio entre formulario y tabla */
+  padding: 20px;
+  background: #f9f9f9;
+  min-height: 100vh;
+  margin-left: 20px;
+  margin-top: 30px;
+}
+
+/* Panel */
+.usuario-panel {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+/* Títulos */
+.usuario-panel h3 {
+  margin-bottom: 15px;
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Mensajes */
+.alert-error {
+  background: #ffe0e0;
+  color: #c0392b;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #e74c3c;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.alert-exito {
+  background: #e0f7e9;
+  color: #27ae60;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #2ecc71;
+  border-radius: 6px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Formulario */
+form {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+form label {
+  font-weight: 500;
+  margin-bottom: 4px;
+  color: #444;
+}
+
+form input,
+form textarea,
+form select {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  width: 100%;
+}
+
+form button {
+  background: #1976d2;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.3s ease;
+}
+
+form button:hover {
+  background: #1565c0;
+}
+
+/* Tabla */
+.tabla-panel {
+  margin-top: 20px;
+}
+
+.tabla-panel h3 {
+  margin-bottom: 15px;
+  font-size: 1.3rem;
+  color: #222;
+  text-align: center;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+th, td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background: #f5f5f5;
+  font-weight: 600;
+  color: #333;
+}
+
+tr:hover {
+  background: #f9f9f9;
+}
+
+/* Filtro */
+.filtro-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.filtro-container input {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.filtro-estado {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.filtro-estado label {
+  font-size: 14px;
+  color: #444;
+}
+
+/* Resaltado coincidencias */
+strong {
+  background: yellow;
+  font-weight: bold;
+  padding: 0 2px;
+  border-radius: 3px;
+}
+
+.form-botones {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.form-botones button {
+  display: block;
+  margin: 0 auto;
+  padding: 12px 24px;
+  background-color: #00b894;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.form-botones button:hover {
+  background-color: #009973;
+}
+
+button[mat-icon-button] {
+  padding: 6px;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: none;
+}
+
+button[mat-icon-button] mat-icon {
+  color: #444;
+  font-size: 22px;
+  transition: color 0.2s ease;
+}
+
+button[mat-icon-button]:hover mat-icon {
+  color: #000;
+}
+
+.estado-activo {
+  color: #6a0dad;
+  font-weight: bold;
+  margin-bottom: 20px;
+}

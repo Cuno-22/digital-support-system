@@ -1,0 +1,176 @@
+<app-nav></app-nav>
+
+<div class="dashboard-layout">
+  <!-- Menú lateral y contenido principal -->
+  <div class="layout">
+    <aside class="sidebar">
+      <nav class="nav-menu">
+        <a class="nav-item" routerLink="/dashboard/admin" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <mat-icon>home</mat-icon>
+          <span>Inicio</span>
+        </a>
+        <a class="nav-item" routerLink="registrar-usuario" routerLinkActive="active">
+          <mat-icon>person_add</mat-icon>
+          <span>Crear Usuario</span>
+        </a>
+        <a class="nav-item" routerLink="registrar-cliente" routerLinkActive="active">
+          <mat-icon>person</mat-icon>
+          <span>Registrar Cliente</span>
+        </a>
+        <a class="nav-item" routerLink="rol-colaborador" routerLinkActive="active">
+          <mat-icon>work</mat-icon>
+          <span>Rol del Colaborador</span>
+        </a>
+        <a class="nav-item" routerLink="tickets" routerLinkActive="active">
+          <mat-icon>assignment</mat-icon>
+          <span>Tickets</span>
+        </a>
+      </nav>
+    </aside>
+
+    <!-- Contenido principal -->
+    <div class="main-content">
+
+      <!-- SOLO MUESTRA LOS PANELES SI ESTÁS EN /dashboard/admin -->
+      <div *ngIf="mostrarPanelAdmin">
+        <h2>Hola, {{ userData?.sNombreUsuario }}</h2>
+        <h1>Bienvenido/a, al Panel de Administrador</h1>
+
+        <!-- Primera fila -->
+        <div class="status-cards">
+          <div class="status-card totales">
+            <mat-icon>insert_chart</mat-icon>
+            <h3>Solicitudes Totales</h3>
+            <p>{{ solicitudesTotales }} solicitudes en total</p>
+          </div>
+
+          <div class="status-card pendientes">
+            <mat-icon>hourglass_empty</mat-icon>
+            <h3>Solicitudes Pendientes</h3>
+            <p>{{ solicitudesPendientes }} solicitudes en cola</p>
+          </div>
+
+          <div class="status-card atendidas">
+            <mat-icon>check_circle</mat-icon>
+            <h3>Solicitudes Atendidas</h3>
+            <p>{{ solicitudesAtendidas }} solicitudes resueltas</p>
+          </div>
+        </div>
+
+        <!-- Segunda fila -->
+        <div class="status-cards">
+          <div class="status-card horas">
+            <mat-icon>access_time</mat-icon>
+            <h3>Promedio de horas</h3>
+            <p>{{ horasTrabajadas }} prom. x solicitud resuelta</p>
+          </div>
+
+          <div class="status-card colaboradores">
+            <mat-icon>groups</mat-icon>
+            <h3>Colaboradores Activos</h3>
+            <p>{{ colaboradoresActivos }} presentes para la actividad</p>
+          </div>
+        </div>
+        <!-- GRAFICOS ESTADISTICOS -->
+        <div class="stats-grid">
+          <div class="stat-panel">
+            <h3>Solicitudes finalizadas por colaborador</h3>
+            <canvas baseChart
+                    #chart1
+                    [data]="chart1Data"
+                    [options]="chart1Options"
+                    chartType="bar">
+            </canvas>
+          </div>
+          <div class="stat-panel">
+            <h3>Top 5 colaboradores</h3>
+            <canvas baseChart
+                    #chart2
+                    [data]="chart2Data"
+                    [options]="chart2Options"
+                    chartType="bar">
+            </canvas>
+          </div>
+          <div class="stat-panel">
+            <h3>Porcentaje de Atención por Colaborador</h3>
+            <canvas baseChart
+                    [data]="chart3Data"
+                    [options]="chart3Options"
+                    [type]="'pie'">
+            </canvas>
+          </div>
+          <div class="stat-panel">
+            <h3>Solicitudes por Usuario Cliente</h3>
+            <canvas baseChart
+                    [data]="chart4Data"
+                    [options]="chart4Options"
+                    [type]="'radar'">
+            </canvas>
+          </div>
+          <div class="stat-panel">
+            <h3>Solicitudes por mes</h3>
+            <label>
+              Últimos:
+              <select (change)="onMonthsChange($event)" [value]="mesesSeleccionados">
+                <option value="3">3 meses</option>
+                <option value="6">6 meses</option>
+                <option value="12">12 meses</option>
+              </select>
+            </label>
+            <canvas baseChart
+                    #chart5
+                    [data]="chart5Data"
+                    [options]="chart5Options"
+                    chartType="line">
+            </canvas>
+          </div>
+          <div class="stat-panel">
+            <h3>Historial de Solicitudes por UC</h3>
+            <label for="clienteSelect" class="form-label" style="margin-bottom: 10px;">
+              Usuario Cliente:
+              <select id="clienteSelect" class="form-select" (change)="onClienteChange($event)">
+                <option value="">-- Seleccionar --</option>
+                <option *ngFor="let cliente of listaUsuariosCliente" [value]="cliente.nIdUsuarioCliente">
+                  {{ cliente.sNombreUsuarioCliente }}
+                </option>
+              </select>
+            </label>
+            <canvas baseChart
+                    #chart6
+                    [data]="chart6Data"
+                    [options]="chart6Options"
+                    [type]="'line'">
+            </canvas>
+          </div>
+        </div>
+      </div>
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+  
+  <!-- Botones en esquina superior derecha -->
+  <div class="top-right-buttons">
+    <button mat-icon-button (click)="toggleUserMenu()" aria-label="Usuario">
+      <mat-icon>account_circle</mat-icon>
+    </button>
+    <button mat-icon-button (click)="toggleNotificaciones()" aria-label="Notificaciones">
+      <mat-icon>notifications</mat-icon>
+    </button>
+  </div>
+
+  <!-- Panel flotante de usuario -->
+  <div class="user-info-card" *ngIf="mostrarUserInfo">
+    <p><strong><mat-icon>person</mat-icon> Nombre:</strong> {{ userData?.sNombreUsuario }}</p>
+    <p><strong><mat-icon>badge</mat-icon> Perfil:</strong> {{ userData?.sPerfil }}</p>
+    <button mat-raised-button color="warn" (click)="cerrarSesion()">
+      <mat-icon>logout</mat-icon> Cerrar sesión
+    </button>
+  </div>
+
+  <!-- Panel flotante de notificaciones -->
+  <div class="notification-panel" *ngIf="mostrarNotificaciones">
+    <button class="panel-btn" (click)="gestionarNotificaciones()">
+      <mat-icon>edit</mat-icon> Gestionar Notificaciones
+    </button>
+  </div>
+</div>

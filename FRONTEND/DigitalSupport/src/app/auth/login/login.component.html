@@ -1,0 +1,43 @@
+<!-- Pantalla de carga -->
+<div class="custom-loading-overlay" *ngIf="visualizarLoadingScreen">
+  <div class="spinner-arcs"></div>
+  <p class="loading-message">{{ mensajeLoadingScreen }}</p>
+</div>
+
+<!-- Formulario de login -->
+<form [formGroup]="loginForm">
+  <!-- Mensaje de éxito del backend -->
+  <p class="text-success" *ngIf="loginMessage">{{ loginMessage }}</p>
+
+  <!-- Mensaje de error general -->
+  <p class="text-danger" *ngIf="loginError">{{ loginError }}</p>
+
+  <!-- Email -->
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input formControlName="sEmail" type="email" class="form-control" id="email">
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text-danger">
+      <div *ngIf="email.errors?.['required']">El Email es requerido.</div>
+      <div *ngIf="email.errors?.['email']">El Email debe tener un formato válido.</div>
+    </div>
+  </div>
+
+  <!-- Contraseña -->
+  <div class="mb-3 password-wrapper">
+    <label for="password" class="form-label">Password</label>
+    <div class="password-input-group">
+      <input formControlName="sContrasena" [type]="hidePassword ? 'password' : 'text'" class="form-control" id="password"/>
+      <button type="button" class="toggle-password-btn" (click)="togglePasswordVisibility()" tabindex="-1">
+        <i class="fa" [ngClass]="hidePassword ? 'fa-eye' : 'fa-eye-slash'"></i>
+      </button>
+    </div>
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text-danger">
+      <div *ngIf="password.errors?.['required']">El Password es requerido.</div>
+    </div>
+  </div>
+
+  <!-- Botón -->
+  <button type="submit" (click)="login()" class="btn btn-primary">Iniciar Sesión</button>
+</form>
+
+<app-footer></app-footer>

@@ -1,0 +1,27 @@
+<div class="tickets-content">
+  <h2 class="title">Tus Solicitudes:</h2>
+
+  <!-- Mensaje cuando no hay solicitudes -->
+  <p *ngIf="listaSolicitudesUC.length === 0" class="sin-solicitudes">
+    No tienes solicitudes registradas.
+  </p>
+
+  <div class="tickets-grid">
+    <div *ngFor="let solicitud of listaSolicitudesUC" class="ticket-card"
+         [ngClass]="{
+            'pendiente': solicitud.sEstado === 'Pendiente', 
+            'proceso': solicitud.sEstado === 'En Proceso',
+            'finalizado': solicitud.sEstado === 'Finalizado'
+         }">
+
+      <h3>{{ solicitud.sMotivo }}</h3>
+      <p><strong>Aplicativo:</strong> {{ solicitud.sNombreAplicativo }}</p>
+      <p><strong>Tipo:</strong> {{ solicitud.sTipoSolicitud }}</p>
+      <p><strong>Fecha creación:</strong> {{ solicitud.dFechaCreacion | date:'dd/MM/yyyy, HH:mm a' }}</p>
+      <p *ngIf="solicitud.dFechaFinalizacion">
+        <strong>Finalización:</strong> {{ solicitud.dFechaFinalizacion | date:'dd/MM/yyyy, HH:mm a' }}
+      </p>
+      <p><strong>Estado:</strong> {{ solicitud.sEstado }}</p>
+    </div>
+  </div>
+</div>
