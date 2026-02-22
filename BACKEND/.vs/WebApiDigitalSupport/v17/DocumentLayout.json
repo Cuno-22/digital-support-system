@@ -1,0 +1,134 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\User\\source\\repos\\DigitalSupport\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|c:\\users\\user\\source\\repos\\digitalsupport\\digitalsupport\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|solutionrelative:digitalsupport\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|c:\\users\\user\\source\\repos\\digitalsupport\\digitalsupport\\businesslogic\\digitalsupportbl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|solutionrelative:digitalsupport\\businesslogic\\digitalsupportbl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|c:\\users\\user\\source\\repos\\digitalsupport\\digitalsupport\\repository\\interface\\digitalsupportrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|solutionrelative:digitalsupport\\repository\\interface\\digitalsupportrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|c:\\users\\user\\source\\repos\\digitalsupport\\digitalsupport\\controllers\\digitalsupportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|solutionrelative:digitalsupport\\controllers\\digitalsupportcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|c:\\users\\user\\source\\repos\\digitalsupport\\digitalsupport\\businesslogic\\interface\\digitalsupportinterfacebl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|solutionrelative:digitalsupport\\businesslogic\\interface\\digitalsupportinterfacebl.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|c:\\users\\user\\source\\repos\\digitalsupport\\digitalsupport\\repository\\digitalsupportrepositorysqlserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|solutionrelative:digitalsupport\\repository\\digitalsupportrepositorysqlserver.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|c:\\users\\user\\source\\repos\\digitalsupport\\digitalsupport\\domain\\digitalsupportmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CEDE6EF-AC75-46D5-B098-EAF861112653}|DigitalSupport\\WebApiDigitalSupport.csproj|solutionrelative:digitalsupport\\domain\\digitalsupportmodels.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\appsettings.json",
+              "RelativeDocumentMoniker": "DigitalSupport\\appsettings.json",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\appsettings.json",
+              "RelativeToolTip": "DigitalSupport\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-01-06T00:45:04.958Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DigitalSupportController.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\Controllers\\DigitalSupportController.cs",
+              "RelativeDocumentMoniker": "DigitalSupport\\Controllers\\DigitalSupportController.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\Controllers\\DigitalSupportController.cs",
+              "RelativeToolTip": "DigitalSupport\\Controllers\\DigitalSupportController.cs",
+              "ViewState": "AgIAADsEAAAAAAAAAAAAADsEAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-29T04:26:48.105Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "DigitalSupportRepositorySqlServer.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\Repository\\DigitalSupportRepositorySqlServer.cs",
+              "RelativeDocumentMoniker": "DigitalSupport\\Repository\\DigitalSupportRepositorySqlServer.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\Repository\\DigitalSupportRepositorySqlServer.cs",
+              "RelativeToolTip": "DigitalSupport\\Repository\\DigitalSupportRepositorySqlServer.cs",
+              "ViewState": "AgIAAD4DAAAAAAAAAAAAAEsDAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T23:36:41.973Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "DigitalSupportRepository.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\Repository\\Interface\\DigitalSupportRepository.cs",
+              "RelativeDocumentMoniker": "DigitalSupport\\Repository\\Interface\\DigitalSupportRepository.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\Repository\\Interface\\DigitalSupportRepository.cs",
+              "RelativeToolTip": "DigitalSupport\\Repository\\Interface\\DigitalSupportRepository.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAqwCkAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T23:34:57.077Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DigitalSupportBL.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\BusinessLogic\\DigitalSupportBL.cs",
+              "RelativeDocumentMoniker": "DigitalSupport\\BusinessLogic\\DigitalSupportBL.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\BusinessLogic\\DigitalSupportBL.cs",
+              "RelativeToolTip": "DigitalSupport\\BusinessLogic\\DigitalSupportBL.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAPgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T23:31:24.35Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DigitalSupportInterfaceBL.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\BusinessLogic\\Interface\\DigitalSupportInterfaceBL.cs",
+              "RelativeDocumentMoniker": "DigitalSupport\\BusinessLogic\\Interface\\DigitalSupportInterfaceBL.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\BusinessLogic\\Interface\\DigitalSupportInterfaceBL.cs",
+              "RelativeToolTip": "DigitalSupport\\BusinessLogic\\Interface\\DigitalSupportInterfaceBL.cs",
+              "ViewState": "AgIAACQAAAAAAAAAAAAIwCkAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T23:22:04.933Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "DigitalSupportModels.cs",
+              "DocumentMoniker": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\Domain\\DigitalSupportModels.cs",
+              "RelativeDocumentMoniker": "DigitalSupport\\Domain\\DigitalSupportModels.cs",
+              "ToolTip": "C:\\Users\\User\\source\\repos\\DigitalSupport\\DigitalSupport\\Domain\\DigitalSupportModels.cs",
+              "RelativeToolTip": "DigitalSupport\\Domain\\DigitalSupportModels.cs",
+              "ViewState": "AgIAAMUBAAAAAAAAAADgv8YBAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-09-26T21:05:08.127Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
